@@ -1,4 +1,4 @@
-package com.example.openfeaturedemo.nativeflagsmith.entity;
+package com.example.openfeaturedemo.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 

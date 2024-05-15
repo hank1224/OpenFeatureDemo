@@ -1,13 +1,10 @@
-package com.example.openfeaturedemo.nativeflagsmith;
+package com.example.openfeaturedemo;
 
-import com.example.openfeaturedemo.nativeflagsmith.entity.Goods;
+import com.example.openfeaturedemo.entity.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/goods")
@@ -19,7 +16,7 @@ public class GoodsController {
         this.goodsService = goodsService;
     }
 
-    @RequestMapping(path = "/{productCode}")
+    @GetMapping(path = "/{productCode}")
     public ResponseEntity<Goods> getGoodsByProductCode(@PathVariable String productCode) {
         try {
             Goods goods = goodsService.getGoodsByProductCode(productCode);
@@ -29,8 +26,8 @@ public class GoodsController {
         }
     }
 
-    @PostMapping
-    public void saveGoods(Goods goods) {
+    @PostMapping(path = "/")
+    public void saveGoods(@RequestBody Goods goods) {
         goodsService.saveGoods(goods);
     }
 

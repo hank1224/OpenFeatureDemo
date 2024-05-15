@@ -1,7 +1,7 @@
-package com.example.openfeaturedemo.nativeflagsmith.config;
+package com.example.openfeaturedemo.config;
 
-import com.example.openfeaturedemo.nativeflagsmith.entity.Goods;
-import com.example.openfeaturedemo.nativeflagsmith.repository.GoodsRepository;
+import com.example.openfeaturedemo.entity.Goods;
+import com.example.openfeaturedemo.repository.GoodsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

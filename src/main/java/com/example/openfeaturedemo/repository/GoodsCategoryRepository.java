@@ -1,6 +1,6 @@
-package com.example.openfeaturedemo.nativeflagsmith.repository;
+package com.example.openfeaturedemo.repository;
 
-import com.example.openfeaturedemo.nativeflagsmith.entity.GoodsCategory;
+import com.example.openfeaturedemo.entity.GoodsCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
