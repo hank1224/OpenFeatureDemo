@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.nativeflagsmith;
 
+import com.example.openfeaturedemo.nativeflagsmith.entity.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

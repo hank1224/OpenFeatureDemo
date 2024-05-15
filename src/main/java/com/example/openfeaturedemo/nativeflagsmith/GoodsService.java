@@ -1,5 +1,7 @@
 package com.example.openfeaturedemo.nativeflagsmith;
 
+import com.example.openfeaturedemo.nativeflagsmith.entity.Goods;
+import com.example.openfeaturedemo.nativeflagsmith.repository.GoodsRepository;
 import org.springframework.stereotype.Service;
 
 @Service

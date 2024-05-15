@@ -1,4 +1,4 @@
-package com.example.openfeaturedemo.nativeflagsmith;
+package com.example.openfeaturedemo.nativeflagsmith.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -14,12 +14,14 @@ public class Goods {
 
     @Column(unique = true, nullable = false)
     private String productCode;
+    //業務上商品編號
 
     private String goodsName;
 
     private String goodsIntro;
 
-    private Long goodsCategoryId;
+    private String goodsCategoryId;
+    // 業務上分類編號
 
     private String goodsCoverImg;
 
@@ -29,9 +31,10 @@ public class Goods {
 
     private Integer stockNum;
 
-    private Byte goodsSellStatus;
+    private Boolean goodsSellStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime;
 
 
@@ -70,11 +73,11 @@ public class Goods {
         this.goodsIntro = goodsIntro;
     }
 
-    public Long getGoodsCategoryId() {
+    public String getGoodsCategoryId() {
         return goodsCategoryId;
     }
 
-    public void setGoodsCategoryId(Long goodsCategoryId) {
+    public void setGoodsCategoryId(String goodsCategoryId) {
         this.goodsCategoryId = goodsCategoryId;
     }
 
@@ -110,11 +113,11 @@ public class Goods {
         this.stockNum = stockNum;
     }
 
-    public Byte getGoodsSellStatus() {
+    public Boolean getGoodsSellStatus() {
         return goodsSellStatus;
     }
 
-    public void setGoodsSellStatus(Byte goodsSellStatus) {
+    public void setGoodsSellStatus(Boolean goodsSellStatus) {
         this.goodsSellStatus = goodsSellStatus;
     }
 
