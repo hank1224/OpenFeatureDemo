@@ -1,6 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
-import com.example.openfeaturedemo.Service.GoodsService;
+import com.example.openfeaturedemo.service.GoodsService;
 import com.example.openfeaturedemo.entity.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

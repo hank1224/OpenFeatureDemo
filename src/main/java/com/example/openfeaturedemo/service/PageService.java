@@ -1,4 +1,4 @@
-package com.example.openfeaturedemo.Service;
+package com.example.openfeaturedemo.service;
 
 import dev.openfeature.sdk.Client;
 import dev.openfeature.sdk.OpenFeatureAPI;

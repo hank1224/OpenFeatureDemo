@@ -1,6 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
-import com.example.openfeaturedemo.Service.PageService;
+import com.example.openfeaturedemo.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
