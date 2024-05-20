@@ -5,6 +5,9 @@ spring.datasource.username=sa
 spring.datasource.password=password
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 
+### Secret Key ###
+flagsmith.key=
+
 ### Thymeleaf ###
 spring.thymeleaf.prefix=classpath:static/templates/
 spring.thymeleaf.suffix=.html

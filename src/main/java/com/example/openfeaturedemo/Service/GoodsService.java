@@ -1,7 +1,9 @@
-package com.example.openfeaturedemo;
+package com.example.openfeaturedemo.Service;
 
 import com.example.openfeaturedemo.entity.Goods;
 import com.example.openfeaturedemo.repository.GoodsRepository;
+import dev.openfeature.sdk.Client;
+import dev.openfeature.sdk.OpenFeatureAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
