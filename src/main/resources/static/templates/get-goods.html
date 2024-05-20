@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Goods</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        #productInfo {
+            margin-top: 20px;
+        }
+        .product-detail {
+            margin-bottom: 10px;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Get Product Information</h1>
+    <div class="input-group mb-3">
+        <input type="text" id="productCode" class="form-control" placeholder="Enter Product Code" aria-label="Product Code" aria-describedby="button-addon">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon" onclick="getProduct()">Get Product</button>
+    </div>
+    <div id="productInfo"></div>
+</div>
+
+<script>
+    function getProduct() {
+        var productCode = document.getElementById('productCode').value;
+        if (!productCode) {
+            alert('Please enter a product code.');
+            return;
+        }
+        $('#productInfo').html('<div class="loader"></div>'); // Show loader
+        $.ajax({
+            url: '/api/v1/goods/' + productCode,
+            type: 'GET',
+            success: function(response) {
+                displayProductInfo(response);
+            },
+            error: function(error) {
+                $('#productInfo').html('<p class="text-danger">Error fetching product information.</p>');
+            }
+        });
+    }
+
+    function displayProductInfo(product) {
+        var infoHtml = `<div class="card" style="width: 18rem;">
+            <img src="${product.goodsCoverImg}" class="card-img-top" alt="Product Image">
+            <div class="card-body">
+                <h5 class="card-title">${product.goodsName}</h5>
+                <p class="card-text">${product.goodsIntro}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Category ID:</strong> ${product.goodsCategoryId}</li>
+                <li class="list-group-item"><strong>Original Price:</strong> ${product.originalPrice}</li>
+                <li class="list-group-item"><strong>Selling Price:</strong> ${product.sellingPrice}</li>
+                <li class="list-group-item"><strong>Stock Number:</strong> ${product.stockNum}</li>
+                <li class="list-group-item"><strong>Sell Status:</strong> ${product.goodsSellStatus ? 'Available' : 'Not Available'}</li>
+                <li class="list-group-item"><strong>Creation Time:</strong> ${product.createTime}</li>`;
+        if (product.updateTime) {
+            infoHtml += `<li class="list-group-item"><strong>Last Updated:</strong> ${product.updateTime}</li>`;
+        }
+        infoHtml += `</ul></div>`;
+        $('#productInfo').html(infoHtml);
+    }
+</script>
+<!-- 引入Bootstrap JS 和 Popper.js -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+</body>
+</html>

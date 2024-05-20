@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>POST Goods</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .loader {
+            display: none;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Add New Product</h1>
+    <form id="productForm">
+        <div class="form-group">
+            <input type="text" id="productCode" class="form-control" placeholder="Product Code" required>
+        </div>
+        <div class="form-group">
+            <input type="text" id="goodsName" class="form-control" placeholder="Product Name" required>
+        </div>
+        <div class="form-group">
+            <textarea id="goodsIntro" class="form-control" placeholder="Product Introduction" required></textarea>
+        </div>
+        <div class="form-group">
+            <input type="text" id="goodsCategoryId" class="form-control" placeholder="Category ID" required>
+        </div>
+        <div class="form-group">
+            <input type="text" id="goodsCoverImg" class="form-control" placeholder="Cover Image URL" required>
+        </div>
+        <div class="form-group">
+            <input type="number" id="originalPrice" class="form-control" placeholder="Original Price" required>
+        </div>
+        <div class="form-group">
+            <input type="number" id="sellingPrice" class="form-control" placeholder="Selling Price" required>
+        </div>
+        <div class="form-group">
+            <input type="number" id="stockNum" class="form-control" placeholder="Stock Number" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addProduct()">Add Product</button>
+    </form>
+    <div id="result"></div>
+    <div class="loader"></div>
+</div>
+
+<script>
+    function addProduct() {
+        $('.loader').show(); // 显示加载指示器
+        var productData = {
+            productCode: $('#productCode').val(),
+            goodsName: $('#goodsName').val(),
+            goodsIntro: $('#goodsIntro').val(),
+            goodsCategoryId: $('#goodsCategoryId').val(),
+            goodsCoverImg: $('#goodsCoverImg').val(),
+            originalPrice: parseFloat($('#originalPrice').val()), // 将字符串转换为浮点数
+            sellingPrice: parseFloat($('#sellingPrice').val()), // 将字符串转换为浮点数
+            stockNum: parseInt($('#stockNum').val(), 10), // 将字符串转换为整数，基数为10
+            goodsSellStatus: true,
+        };
+
+        $.ajax({
+            url: '/api/v1/goods/',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(productData),
+            success: function(response) {
+                $('#result').html('<p class="text-success">Product added successfully!</p>');
+                $('.loader').hide(); // 隐藏加载指示器
+            },
+            error: function(error) {
+                // 如果添加产品失败，则显示错误消息於前端
+                $('#result').append('<pre>' + error.responseText + '</pre>');
+                $('.loader').hide(); // 隐藏加载指示器
+            }
+        });
+    }
+</script>
+<!-- 引入Bootstrap JS 和 Popper.js -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+</body>
+</html>
