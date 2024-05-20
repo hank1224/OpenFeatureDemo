@@ -10,9 +10,6 @@
         #productInfo {
             margin-top: 20px;
         }
-        .product-detail {
-            margin-bottom: 10px;
-        }
         .loader {
             border: 4px solid #f3f3f3;
             border-radius: 50%;
@@ -35,7 +32,25 @@
         <input type="text" id="productCode" class="form-control" placeholder="Enter Product Code" aria-label="Product Code" aria-describedby="button-addon">
         <button class="btn btn-outline-secondary" type="button" id="button-addon" onclick="getProduct()">Get Product</button>
     </div>
-    <div id="productInfo"></div>
+    <table class="table" id="productTable">
+        <thead>
+        <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>Product Name</td><td id="productName"></td></tr>
+        <tr><td>Product Intro</td><td id="productIntro"></td></tr>
+        <tr><td>Category ID</td><td id="categoryID"></td></tr>
+        <tr><td>Original Price</td><td id="originalPrice"></td></tr>
+        <tr><td>Selling Price</td><td id="sellingPrice"></td></tr>
+        <tr><td>Stock Number</td><td id="stockNumber"></td></tr>
+        <tr><td>Sell Status</td><td id="sellStatus"></td></tr>
+        <tr><td>Creation Time</td><td id="creationTime"></td></tr>
+        <tr><td>Last Updated</td><td id="lastUpdated"></td></tr>
+        </tbody>
+    </table>
 </div>
 
 <script>
@@ -45,7 +60,9 @@
             alert('Please enter a product code.');
             return;
         }
-        $('#productInfo').html('<div class="loader"></div>'); // Show loader
+        // 清空表格内容
+        clearTable();
+        $('#productName').html('<div class="loader"></div>'); // Show loader in the first cell
         $.ajax({
             url: '/api/v1/goods/' + productCode,
             type: 'GET',
@@ -53,30 +70,26 @@
                 displayProductInfo(response);
             },
             error: function(error) {
-                $('#productInfo').html('<p class="text-danger">Error fetching product information.</p>');
+                clearTable();
+                $('#productName').html('<span class="text-danger">Error fetching product information.</span>');
             }
         });
     }
 
     function displayProductInfo(product) {
-        var infoHtml = `<div class="card" style="width: 18rem;">
-            <img src="${product.goodsCoverImg}" class="card-img-top" alt="Product Image">
-            <div class="card-body">
-                <h5 class="card-title">${product.goodsName}</h5>
-                <p class="card-text">${product.goodsIntro}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Category ID:</strong> ${product.goodsCategoryId}</li>
-                <li class="list-group-item"><strong>Original Price:</strong> ${product.originalPrice}</li>
-                <li class="list-group-item"><strong>Selling Price:</strong> ${product.sellingPrice}</li>
-                <li class="list-group-item"><strong>Stock Number:</strong> ${product.stockNum}</li>
-                <li class="list-group-item"><strong>Sell Status:</strong> ${product.goodsSellStatus ? 'Available' : 'Not Available'}</li>
-                <li class="list-group-item"><strong>Creation Time:</strong> ${product.createTime}</li>`;
-        if (product.updateTime) {
-            infoHtml += `<li class="list-group-item"><strong>Last Updated:</strong> ${product.updateTime}</li>`;
-        }
-        infoHtml += `</ul></div>`;
-        $('#productInfo').html(infoHtml);
+        $('#productName').text(product.goodsName);
+        $('#productIntro').text(product.goodsIntro);
+        $('#categoryID').text(product.goodsCategoryId);
+        $('#originalPrice').text(product.originalPrice);
+        $('#sellingPrice').text(product.sellingPrice);
+        $('#stockNumber').text(product.stockNum);
+        $('#sellStatus').text(product.goodsSellStatus ? 'Available' : 'Not Available');
+        $('#creationTime').text(product.createTime);
+        $('#lastUpdated').text(product.updateTime || 'N/A');
+    }
+
+    function clearTable() {
+        $('#productName, #productIntro, #categoryID, #originalPrice, #sellingPrice, #stockNumber, #sellStatus, #creationTime, #lastUpdated').html('');
     }
 </script>
 <!-- 引入Bootstrap JS 和 Popper.js -->
