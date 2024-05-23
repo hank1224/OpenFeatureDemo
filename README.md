@@ -6,12 +6,15 @@ Feature Flag（功能旗標）是一種軟體開發技術，允許團隊動態�
 
 OpenFeature 是一個開源的 Feature Flag 平台，旨在為開發者提供一個標準化、供應商中立的功能旗標接口。
 
-by [陳萭鍒](https://github.com/110306041) & [陳澔恩](https://github.com/hank1224)
-
 ## Demo示例
 
-1. [Secret Button](http://localhost:8080/secret-Button)：在 prod 環境中，無需重啟或重新部署即可開啟或關閉新功能，讓使用者測試並隨時回撤。
+### Secret Button
+- URL: [http://localhost:8080/secret-Button](http://localhost:8080/secret-Button)
+- 描述：在 prod 環境中，無需重啟或重新部署即可開啟或關閉新功能，讓使用者測試並隨時回撤。
 
+### WIP
+- URL: [http://localhost:8080/](http://localhost:8080/)
+- 描述：...
 
 ## 此專案使用
 - [OpenFeature](https://openfeature.dev/)：使能夠自由切換 Provider
@@ -20,3 +23,7 @@ by [陳萭鍒](https://github.com/110306041) & [陳澔恩](https://github.com/ha
 - Spring Boot：整體框架
 - Hibernate：ORM
 - Thymeleaf：模板引擎
+
+## Contributors
+- [陳澔恩](https://github.com/hank1224)
+- [陳萭鍒](https://github.com/110306041)
