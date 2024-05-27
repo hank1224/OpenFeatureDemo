@@ -1,14 +1,11 @@
 package com.example.openfeaturedemo.controller;
 
-import com.example.openfeaturedemo.service.DynamicFeatureFlagService;
 import com.example.openfeaturedemo.service.PageService;
-import dev.openfeature.sdk.FlagEvaluationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(path = "/page")
@@ -17,23 +14,6 @@ public class PageController {
     @Autowired
     public PageController(PageService pageService) {
         this.pageService = pageService;
-    }
-
-    @Autowired
-    private DynamicFeatureFlagService featureFlagService;
-
-    @GetMapping("/feature-flag")
-    public String getFeatureFlag(@RequestParam String flagKey,
-                                 @RequestParam String defaultValue,
-                                 @RequestParam String provider) {
-        return featureFlagService.evaluateFeatureFlag(flagKey, defaultValue, provider);
-    }
-
-    @GetMapping("/feature-flag-details")
-    public FlagEvaluationDetails<String> getFeatureFlagDetails(@RequestParam String flagKey,
-                                                               @RequestParam String defaultValue,
-                                                               @RequestParam String provider) {
-        return featureFlagService.evaluateFeatureFlagDetails(flagKey, defaultValue, provider);
     }
 
     @GetMapping("/post-goods")

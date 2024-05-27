@@ -4,6 +4,7 @@ import co.featbit.openfeature.FBProvider;
 import co.featbit.server.FBConfig;
 import dev.openfeature.contrib.providers.flagsmith.FlagsmithProvider;
 import dev.openfeature.contrib.providers.flagsmith.FlagsmithProviderOptions;
+import dev.openfeature.sdk.OpenFeatureAPI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +21,19 @@ public class FeatureFlagConfig {
     @Value("${featbit.envSecret}")
     private String featbitEnvSecret;
     @Bean
-    public FBProvider featBitProvider() {
-        FBConfig featBitConfig = new FBConfig.Builder()
+    public FBProvider featbitProvider() {
+        FBConfig featbitConfig = new FBConfig.Builder()
                 .streamingURL(featbitStreamingURL)
                 .eventURL(featbitEventURL)
                 .build();
-        return new FBProvider(featbitEnvSecret, featBitConfig);
+
+        FBProvider provider = new FBProvider(featbitEnvSecret, featbitConfig);
+
+        // 註冊 provider 並指定名稱
+        OpenFeatureAPI.getInstance().setProvider("featbit", provider);
+        return provider;
     }
+
 
     @Value("${flagsmith.api-key}")
     private String flagsmithApiKey;
@@ -35,6 +42,10 @@ public class FeatureFlagConfig {
         FlagsmithProviderOptions flagsmithOptions = FlagsmithProviderOptions.builder()
                 .apiKey(flagsmithApiKey)
                 .build();
-        return new FlagsmithProvider(flagsmithOptions);
+        FlagsmithProvider provider = new FlagsmithProvider(flagsmithOptions);
+
+        // 註冊 provider 並指定名稱
+        OpenFeatureAPI.getInstance().setProvider("flagsmith", provider);
+        return provider;
     }
 }
