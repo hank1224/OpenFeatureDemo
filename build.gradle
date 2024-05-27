@@ -26,6 +26,7 @@ dependencies {
     implementation 'dev.openfeature:sdk:1.8.0'
     implementation 'com.flagsmith:flagsmith-java-client:7.2.0'
     implementation 'dev.openfeature.contrib.providers:flagsmith:0.0.8'
+    implementation 'co.featbit:featbit-openfeature-provider-java-server:1.0.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
