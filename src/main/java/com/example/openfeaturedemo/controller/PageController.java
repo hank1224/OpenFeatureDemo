@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
+import com.example.openfeaturedemo.dto.SecretButtonDTO;
 import com.example.openfeaturedemo.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,15 +29,9 @@ public class PageController {
 
     @GetMapping("/secret-button")
     public String secretButton(Model model) {
-        String secretButtonStatus = pageService.secretButton();
-        model.addAttribute("secret_button_feature", "secret-button_enabled".equals(secretButtonStatus));
+        SecretButtonDTO secretButtonDetail = pageService.getSecretButtonFlag();
+        model.addAttribute("secretButtonDetail", secretButtonDetail);
         return "secret-button";
     }
 
-    @GetMapping("/secret-button2")
-    public String secretButton2(Model model) {
-        String secretButtonStatus = pageService.secretButton2();
-        model.addAttribute("secret_button_feature", "secret-button_enabled".equals(secretButtonStatus));
-        return "secret-button";
-    }
 }

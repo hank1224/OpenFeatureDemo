@@ -1,39 +1,64 @@
 package com.example.openfeaturedemo.service;
 
-import dev.openfeature.sdk.Client;
-import dev.openfeature.sdk.OpenFeatureAPI;
+import com.example.openfeaturedemo.dto.SecretButtonDTO;
+import dev.openfeature.sdk.*;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service
 public class PageService {
 
-    public String secretButton() {
+    /* DemoCase1: Secret-Button */
+    public SecretButtonDTO getSecretButtonFlag() {
+        Client client = OpenFeatureAPI.getInstance().getClient("flagsmith");
+        boolean isEnabled = client.getBooleanValue("secret-button", false);
+
+        // 可以通過 getDetails 方法獲取完整詳細信息
+        FlagEvaluationDetails<Boolean> secretButtonDetail = client.getBooleanDetails("secret-button", false);
+
+        // 一般情況用上面的（isEnable）就可以了，此為顯示整包詳細狀態而封裝
+        return new SecretButtonDTO(
+                isEnabled,
+                secretButtonDetail.getFlagKey(),
+                secretButtonDetail.getValue(),
+                secretButtonDetail.getVariant(),
+                secretButtonDetail.getReason(),
+                secretButtonDetail.getErrorCode(),
+                secretButtonDetail.getErrorMessage(),
+                secretButtonDetail.getFlagMetadata()
+        );
+    }
+
+    /* DemoCase2: Multi-Button */
+    public String flagsmithButton() {  //Demo case 2: Multi-Button
         Client client = OpenFeatureAPI.getInstance().getClient("flagsmith");
         boolean isEnabled = client.getBooleanValue("flagsmith-button", false);
-        Object detail = client.getBooleanDetails("flagsmith-button", false);
-        System.out.println(detail);
 
         if (isEnabled) {
-            // 啟用時的邏輯
-            return "secret-button_enabled";
+            return "flagsmith-button_enabled";
         } else {
-            // 禁用時的邏輯
-            return "secret-button_disabled";
+            return "flagsmith-button_disabled";
         }
     }
 
-    public String secretButton2() {
+    /* DemoCase2: Multi-Button */
+    public String featbitButton() {
         Client client = OpenFeatureAPI.getInstance().getClient("featbit");
-        boolean isEnabled = client.getBooleanValue("featbit-button", false);
-        Object detail = client.getBooleanDetails("featbit-button", false);
-        System.out.println(detail);
+
+        // FeaBit SDK 要求在評估功能標誌時需要一個評估上下文
+        // The OpenFeature specification allows for an optional targeting key, but FeatBit requires a key for evaluation.
+        EvaluationContext evalCtx = new ImmutableContext("user-key", new HashMap<String, Value>() {{
+            put("name", new Value("user-name"));
+            put("country", new Value("USA"));
+        }});
+
+        boolean isEnabled = client.getBooleanValue("featbit-button", false, evalCtx);
 
         if (isEnabled) {
-            // 啟用時的邏輯
-            return "secret-button_enabled";
+            return "fitbit-button_enabled";
         } else {
-            // 禁用時的邏輯
-            return "secret-button_disabled";
+            return "fitbit-button_disabled";
         }
     }
 }

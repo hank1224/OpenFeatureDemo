@@ -12,8 +12,7 @@ public class EvaluationContextProvider {
 
     public EvaluationContext createContext() {
         return new ImmutableContext("user-key", new HashMap<String, Value>() {{
-            put("name", new Value("user-name"));
-            put("country", new Value("USA"));
+            put("tester-id", new Value("tester"));
         }});
     }
 }
