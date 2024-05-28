@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
+import com.example.openfeaturedemo.dto.MultiButtonDTO;
 import com.example.openfeaturedemo.dto.SecretButtonDTO;
 import com.example.openfeaturedemo.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,13 @@ public class PageController {
         SecretButtonDTO secretButtonDetail = pageService.getSecretButtonFlag();
         model.addAttribute("secretButtonDetail", secretButtonDetail);
         return "secret-button";
+    }
+
+    @GetMapping("/multi-button")
+    public String multiButton(Model model) {
+        MultiButtonDTO multiButtonDTO = pageService.getMultiButtonFlag();
+        model.addAttribute("multiButtonDTO", multiButtonDTO);
+        return "multi-button";
     }
 
 }

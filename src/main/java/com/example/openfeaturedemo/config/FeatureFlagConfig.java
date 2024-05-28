@@ -29,8 +29,6 @@ public class FeatureFlagConfig {
 
         FBProvider provider = new FBProvider(featbitEnvSecret, featbitConfig);
 
-        //    註冊 provider 並指定名稱
-        System.out.println("Registering featbit provider");
         OpenFeatureAPI.getInstance().setProvider("featbit", provider);
         return provider;
     }
@@ -45,8 +43,6 @@ public class FeatureFlagConfig {
                 .build();
         FlagsmithProvider provider = new FlagsmithProvider(flagsmithOptions);
 
-        // 註冊 provider 並指定名稱
-        System.out.println("Registering flagsmith provider");
         OpenFeatureAPI.getInstance().setProvider("flagsmith", provider);
         return provider;
     }

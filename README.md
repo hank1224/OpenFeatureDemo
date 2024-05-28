@@ -8,12 +8,16 @@ OpenFeature 是一個開源的 Feature Flag 平台，旨在為開發者提供一
 
 ## Demo示例
 
-### DemoCase1: Secret-Button
-- URL: [http://localhost:8080/page/secret-button](http://localhost:8080/page/secret-button)
+### Case1: Secret-Button
+- URL：[http://localhost:8080/page/secret-button](http://localhost:8080/page/secret-button)
 - 描述：在 prod 環境中，無需重啟或重新部署即可開啟或關閉新功能，讓使用者測試並隨時回撤。
 
-### WIP
-- URL: [http://localhost:8080/](http://localhost:8080/)
+### Case2: Multi-Button
+- URL：[http://localhost:8080/page/multi-button](http://localhost:8080/page/multi-button)
+- 描述：可以同時使用多個 Feature Flag 供應商，並且可以隨時切換，擺脫依賴。
+
+### Case3: WIP
+- URL：[http://localhost:8080/page/](http://localhost:8080/page/)
 - 描述：...
 
 ## 此專案使用
