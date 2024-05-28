@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiButton</title>
+</head>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+    .btn:hover {
+        background-color: #3e8e41
+    }
+
+    .btn:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
+<body>
+<header>
+    <h1>DemoCase2: Multi-Button</h1>
+    <h2>串接多個Provider，Integrated with OpenFeature</h2>
+</header>
+<main>
+    <section>
+        <h3>展示</h3>
+        <p th:if="${multiButtonDTO.flagsmithButtonIsEnabled}">
+            <a href="https://example.com" class="btn">Flagsmith！</a>
+        </p>
+        <p th:unless="${multiButtonDTO.flagsmithButtonIsEnabled}">
+            <em><u>這裡啥都沒有，好像有按鈕被藏起來了</u></em>
+        </p>
+        <p th:if="${multiButtonDTO.featbitButtonIsEnabled}">
+            <a href="https://example.com" class="btn">FeatBit！</a>
+        </p>
+        <p th:unless="${multiButtonDTO.featbitButtonIsEnabled}">
+            <em><u>這裡啥都沒有，好像有按鈕被藏起來了</u></em>
+        </p>
+    </section>
+    <br>
+    <hr>
+    <section>
+        <h3>說明：</h3>
+        <p>使用 Flagsmith 和 FeatBit，需先設定皆為bool型態</p>
+        <ul>
+            <li>Flagsmith:
+                <ul>
+                    <li>ID/Name: flagsmith-button</li>
+                    <li>註：已設定獲取失敗後預設值為false</li>
+                </ul>
+            </li>
+            <li>FeatBit:
+                <ul>
+                    <li>Key: featbit-button</li>
+                    <li>註：已設定獲取失敗後預設值為false</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h4>Debug</h4>
+        <p th:text="'multiButtonDTO.flagsmithButtonIsEnabled: ' + ${multiButtonDTO.flagsmithButtonIsEnabled}"></p>
+        <p th:text="'multiButtonDTO.featbitButtonIsEnabled: ' + ${multiButtonDTO.featbitButtonIsEnabled}"></p>
+    </section>
+</main>
+</body>
+</html>

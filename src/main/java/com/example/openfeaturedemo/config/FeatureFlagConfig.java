@@ -1,5 +1,7 @@
 package com.example.openfeaturedemo.config;
 
+import co.featbit.openfeature.FBProvider;
+import co.featbit.server.FBConfig;
 import dev.openfeature.contrib.providers.flagsmith.FlagsmithProvider;
 import dev.openfeature.contrib.providers.flagsmith.FlagsmithProviderOptions;
 import dev.openfeature.sdk.OpenFeatureAPI;
@@ -10,17 +12,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FeatureFlagConfig {
 
-    @Value("${flagsmith.key}")
-    private String flagsmithKey;
+    @Value("${featbit.streamingURL}")
+    private String featbitStreamingURL;
 
+    @Value("${featbit.eventURL}")
+    private String featbitEventURL;
+
+    @Value("${featbit.envSecret}")
+    private String featbitEnvSecret;
     @Bean
-    public FlagsmithProvider flagsmithProvider() {
-        FlagsmithProviderOptions options = FlagsmithProviderOptions.builder()
-                .apiKey(flagsmithKey)
+    public FBProvider featbitProvider() {
+        FBConfig featbitConfig = new FBConfig.Builder()
+                .streamingURL(featbitStreamingURL)
+                .eventURL(featbitEventURL)
                 .build();
 
-        FlagsmithProvider provider = new FlagsmithProvider(options); // 確保傳遞options
-        OpenFeatureAPI.getInstance().setProvider(provider);
+        FBProvider provider = new FBProvider(featbitEnvSecret, featbitConfig);
+
+        OpenFeatureAPI.getInstance().setProvider("featbit", provider);
+        return provider;
+    }
+
+
+    @Value("${flagsmith.api-key}")
+    private String flagsmithApiKey;
+    @Bean
+    public FlagsmithProvider flagsmithProvider() {
+        FlagsmithProviderOptions flagsmithOptions = FlagsmithProviderOptions.builder()
+                .apiKey(flagsmithApiKey)
+                .build();
+        FlagsmithProvider provider = new FlagsmithProvider(flagsmithOptions);
+
+        OpenFeatureAPI.getInstance().setProvider("flagsmith", provider);
         return provider;
     }
 }
