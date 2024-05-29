@@ -6,6 +6,12 @@ Feature Flag（功能旗標）是一種軟體開發技術，允許團隊動態�
 
 OpenFeature 是一個開源的 Feature Flag 平台，旨在為開發者提供一個標準化、供應商中立的功能旗標接口。
 
+## 我寫的說明文件
+
+寫很久看一下啦拜託，幫你快速上手。
+
+https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pvs=4
+
 ## Demo示例
 
 ### Case1: Secret-Button
