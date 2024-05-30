@@ -71,7 +71,20 @@
             },
             error: function(error) {
                 clearTable();
-                $('#productName').html('<span class="text-danger">Error fetching product information.</span>');
+                // show API error message
+                $('#productName').html('<span class="text-danger">Something went wrong...</span>');
+
+                var errorMessage = 'Unknown error occurred.';
+                if (error.responseJSON && error.responseJSON.message) {
+                    errorMessage = error.responseJSON.message;
+                } else if (error.statusText) {
+                    errorMessage = error.statusText;
+                }
+
+                var statusCode = error.status ? error.status : 'Unknown status';
+                var fullErrorMessage = 'Error (' + statusCode + '): ' + errorMessage;
+
+                $('#productIntro').html('<span class="text-danger">' + fullErrorMessage + '</span>');
             }
         });
     }

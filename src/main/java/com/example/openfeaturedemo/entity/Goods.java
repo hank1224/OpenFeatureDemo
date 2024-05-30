@@ -25,7 +25,7 @@ public class Goods {
 
     private String goodsCoverImg;
 
-    private Integer originalPrice;
+    private Integer costPrice;
 
     private Integer sellingPrice;
 
@@ -89,12 +89,12 @@ public class Goods {
         this.goodsCoverImg = goodsCoverImg;
     }
 
-    public Integer getOriginalPrice() {
-        return originalPrice;
+    public Integer getCostPrice() {
+        return costPrice;
     }
 
-    public void setOriginalPrice(Integer originalPrice) {
-        this.originalPrice = originalPrice;
+    public void setCostPrice(Integer costPrice) {
+        this.costPrice = costPrice;
     }
 
     public Integer getSellingPrice() {
@@ -149,7 +149,7 @@ public class Goods {
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsIntro=").append(goodsIntro);
         sb.append(", goodsCoverImg=").append(goodsCoverImg);
-        sb.append(", originalPrice=").append(originalPrice);
+        sb.append(", cost_pricePrice=").append(costPrice);
         sb.append(", sellingPrice=").append(sellingPrice);
         sb.append(", stockNum=").append(stockNum);
         sb.append(", goodsSellStatus=").append(goodsSellStatus);

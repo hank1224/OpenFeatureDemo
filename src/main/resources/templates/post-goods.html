@@ -74,9 +74,19 @@
                 $('.loader').hide(); // 隐藏加载指示器
             },
             error: function(error) {
-                // 如果添加产品失败，则显示错误消息於前端
-                $('#result').append('<pre>' + error.responseText + '</pre>');
-                $('.loader').hide(); // 隐藏加载指示器
+                var errorMessage = 'Unknown error occurred.';
+                if (error.responseJSON && error.responseJSON.message) {
+                    errorMessage = error.responseJSON.message;
+                } else if (error.statusText) {
+                    errorMessage = error.statusText;
+                }
+
+                var statusCode = error.status ? error.status : 'Unknown status';
+                var fullErrorMessage = 'Error (' + statusCode + '): ' + errorMessage;
+
+                // 顯示錯誤訊息於前端
+                $('#result').html('<p class="text-danger">' + fullErrorMessage + '</p>');
+                $('.loader').hide(); // 隱藏加載指示器
             }
         });
     }

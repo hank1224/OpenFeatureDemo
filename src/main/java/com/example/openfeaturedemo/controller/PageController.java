@@ -19,12 +19,12 @@ public class PageController {
     }
 
     @GetMapping("/post-goods")
-    public String postGoods(Model model) {
+    public String postGoods() {
         return "post-goods"; // 返回模板文件的名稱（不包括後綴）
     }
 
     @GetMapping("/get-goods")
-    public String getGoods(Model model) {
+    public String getGoods() {
         return "get-goods";
     }
 
