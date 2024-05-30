@@ -19,12 +19,12 @@ public class GoodsConfig {
             goods1.setGoodsIntro("我的手機超牛逼");
             goods1.setGoodsCategoryId("phone");
             goods1.setGoodsCoverImg("https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111870_iphone13-pro-max-colors-480.png");
-            goods1.setOriginalPrice(33500);
+            goods1.setCostPrice(33500);
             goods1.setSellingPrice(36900);
             goods1.setStockNum(100);
             goods1.setGoodsSellStatus(true);
             goods1.setCreateTime(new Date());
-            
+
 
             Goods goods2 = new Goods();
             goods2.setProductCode("ipadpro2021");
@@ -32,7 +32,7 @@ public class GoodsConfig {
             goods2.setGoodsIntro("我的平板超牛逼");
             goods2.setGoodsCategoryId("laptop");
             goods2.setGoodsCoverImg("https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/refurb-ipad-pro-11-wifi-spacegray-2021?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1674663706415");
-            goods2.setOriginalPrice(34900);
+            goods2.setCostPrice(34900);
             goods2.setSellingPrice(38000);
             goods2.setStockNum(20);
             goods2.setGoodsSellStatus(true);
