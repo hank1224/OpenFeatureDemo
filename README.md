@@ -38,6 +38,10 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 ## Others
 [SwaggerPage](http://localhost:8080/swagger-ui/index.html)
 
+### Goods interface
+- [GET](http://localhost:8080/page/get-goods)
+- [POST](http://localhost:8080/page/post-goods)
+
 ## Contributors
 - [陳澔恩](https://github.com/hank1224)
 - [陳萭鍒](https://github.com/110306041)
