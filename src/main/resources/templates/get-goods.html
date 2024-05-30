@@ -46,7 +46,7 @@
         <tr><td>Original Price</td><td id="originalPrice"></td></tr>
         <tr><td>Selling Price</td><td id="sellingPrice"></td></tr>
         <tr><td>Stock Number</td><td id="stockNumber"></td></tr>
-        <tr><td>Sell Status</td><td id="sellStatus"></td></tr>
+        <tr><td>Is on Sale</td><td id="isOnSale"></td></tr>
         <tr><td>Creation Time</td><td id="creationTime"></td></tr>
         <tr><td>Last Updated</td><td id="lastUpdated"></td></tr>
         </tbody>
@@ -96,13 +96,13 @@
         $('#originalPrice').text(product.originalPrice);
         $('#sellingPrice').text(product.sellingPrice);
         $('#stockNumber').text(product.stockNum);
-        $('#sellStatus').text(product.goodsSellStatus ? 'Available' : 'Not Available');
+        $('#isOnSale').text(product.isOnSale ? 'Available' : 'Not Available');
         $('#creationTime').text(product.createTime);
         $('#lastUpdated').text(product.updateTime || 'N/A');
     }
 
     function clearTable() {
-        $('#productName, #productIntro, #categoryID, #originalPrice, #sellingPrice, #stockNumber, #sellStatus, #creationTime, #lastUpdated').html('');
+        $('#productName, #productIntro, #categoryID, #originalPrice, #sellingPrice, #stockNumber, #isOnSale, #creationTime, #lastUpdated').html('');
     }
 </script>
 <!-- 引入Bootstrap JS 和 Popper.js -->

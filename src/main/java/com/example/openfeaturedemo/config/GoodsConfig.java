@@ -22,7 +22,7 @@ public class GoodsConfig {
             goods1.setCostPrice(33500);
             goods1.setSellingPrice(36900);
             goods1.setStockNum(100);
-            goods1.setGoodsSellStatus(true);
+            goods1.setIsOnSale(true);
             goods1.setCreateTime(new Date());
 
 
@@ -35,7 +35,7 @@ public class GoodsConfig {
             goods2.setCostPrice(34900);
             goods2.setSellingPrice(38000);
             goods2.setStockNum(20);
-            goods2.setGoodsSellStatus(true);
+            goods2.setIsOnSale(true);
             goods2.setCreateTime(new Date());
 
             // 保存到数据库

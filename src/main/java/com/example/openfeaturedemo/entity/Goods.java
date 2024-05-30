@@ -1,6 +1,8 @@
 package com.example.openfeaturedemo.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -10,35 +12,45 @@ public class Goods {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(hidden = true)
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @Schema(description = "業務上商品編號", example = "ipad2025")
     private String productCode;
-    //業務上商品編號
 
+    @Schema(description = "商品名稱", example = "iPad 2025")
     private String goodsName;
 
+    @Schema(description = "商品介紹", example = "2025年最新款iPad")
     private String goodsIntro;
 
+    @Schema(description = "業務上分類編號", example = "ipad")
     private String goodsCategoryId;
-    // 業務上分類編號
 
+    @Schema(description = "商品封面圖片", example = "https://www.example.com/ipad2025.jpg")
     private String goodsCoverImg;
 
+    @Schema(description = "成本價", example = "10000")
     private Integer costPrice;
 
+    @Schema(description = "售價", example = "12000")
     private Integer sellingPrice;
 
+    @Schema(description = "庫存數量", example = "100")
     private Integer stockNum;
 
-    private Boolean goodsSellStatus;
+    @Schema(description = "商品上下架狀態", example = "true")
+    private Boolean isOnSale;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Schema(description = "建立時間", example = "2021-01-01 00:00:00")
     private Date createTime;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Schema(description = "更新時間")
     private Date updateTime;
 
     public Long getId() {
@@ -113,12 +125,12 @@ public class Goods {
         this.stockNum = stockNum;
     }
 
-    public Boolean getGoodsSellStatus() {
-        return goodsSellStatus;
+    public Boolean getIsOnSale() {
+        return isOnSale;
     }
 
-    public void setGoodsSellStatus(Boolean goodsSellStatus) {
-        this.goodsSellStatus = goodsSellStatus;
+    public void setIsOnSale(Boolean isOnSale) {
+        this.isOnSale = isOnSale;
     }
 
     public Date getCreateTime() {
@@ -149,10 +161,10 @@ public class Goods {
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsIntro=").append(goodsIntro);
         sb.append(", goodsCoverImg=").append(goodsCoverImg);
-        sb.append(", cost_pricePrice=").append(costPrice);
+        sb.append(", costPrice=").append(costPrice);
         sb.append(", sellingPrice=").append(sellingPrice);
         sb.append(", stockNum=").append(stockNum);
-        sb.append(", goodsSellStatus=").append(goodsSellStatus);
+        sb.append(", isOnSale=").append(isOnSale);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

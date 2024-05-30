@@ -36,8 +36,8 @@ public class GoodsService {
         if (goods.getGoodsCategoryId() == null || goods.getGoodsCategoryId().trim().isEmpty()) {
             throw new BadRequestException("Goods category ID is required.");
         }
-        if (goods.getGoodsSellStatus() == null) {
-            throw new BadRequestException("Goods sell status is required.");
+        if (goods.getIsOnSale() == null) {
+            throw new BadRequestException("Goods sell status(isOnSale) is required.");
         }
         if (goods.getStockNum() == null) {
             throw new BadRequestException("Stock number is required.");
