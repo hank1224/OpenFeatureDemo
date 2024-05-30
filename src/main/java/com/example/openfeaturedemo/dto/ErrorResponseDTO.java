@@ -4,13 +4,11 @@ public class ErrorResponseDTO {
     private String error;
     private String message;
     private int status;
-    private String path;
 
-    public ErrorResponseDTO(String error, String message, int status, String path) {
+    public ErrorResponseDTO(String error, String message, int status) {
         this.error = error;
         this.message = message;
         this.status = status;
-        this.path = path;
     }
 
     // Getters and setters
@@ -36,13 +34,5 @@ public class ErrorResponseDTO {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

@@ -31,8 +31,12 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - [Flagsmith](https://flagsmith.com)：主要 Feature Flag 供應商（Provider）
 - [FeatBit](https://featbit.co)：次要 Feature Flag 供應商，展示遷移過程
 - Spring Boot：整體框架
+- Spring Doc：生成 API 文件
 - Hibernate：ORM
 - Thymeleaf：模板引擎
+
+## Others
+[SwaggerPage](http://localhost:8080/swagger-ui/index.html)
 
 ## Contributors
 - [陳澔恩](https://github.com/hank1224)
