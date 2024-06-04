@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
+import com.example.openfeaturedemo.annotation.UseNewArchitecture;
 import com.example.openfeaturedemo.entity.Goods;
 import com.example.openfeaturedemo.service.GoodsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +23,7 @@ public class GoodsController {
         this.goodsService = goodsService;
     }
 
+    @UseNewArchitecture
     @GetMapping(path = "/{productCode}")
     @Operation(summary = "Get a Product by its ProductCode", description = "Using the ProductCode in business to obtain a product instead of using the ID.")
     public ResponseEntity<Goods> getGoodsByProductCode(@PathVariable String productCode) {
@@ -33,6 +35,7 @@ public class GoodsController {
         }
     }
 
+    @UseNewArchitecture
     @PostMapping(path = "/")
     @Operation(summary = "Add an new Good")
     public void saveGoods(@RequestBody @Valid Goods goods) {
