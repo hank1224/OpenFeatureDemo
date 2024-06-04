@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Configuration
@@ -22,8 +23,8 @@ public class GoodsConfig {
             goods1.setCostPrice(33500);
             goods1.setSellingPrice(36900);
             goods1.setStockNum(100);
-            goods1.setGoodsSellStatus(true);
-            goods1.setCreateTime(new Date());
+            goods1.setIsOnSale(true);
+            goods1.setCreateTime(OffsetDateTime.now());
 
 
             Goods goods2 = new Goods();
@@ -35,8 +36,8 @@ public class GoodsConfig {
             goods2.setCostPrice(34900);
             goods2.setSellingPrice(38000);
             goods2.setStockNum(20);
-            goods2.setGoodsSellStatus(true);
-            goods2.setCreateTime(new Date());
+            goods2.setIsOnSale(true);
+            goods2.setCreateTime(OffsetDateTime.now());
 
             // 保存到数据库
             goodsRepository.save(goods1);
