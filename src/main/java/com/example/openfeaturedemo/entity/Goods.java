@@ -1,10 +1,9 @@
 package com.example.openfeaturedemo.entity;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "goods")
@@ -40,18 +39,17 @@ public class Goods {
     @Schema(description = "庫存數量", example = "100")
     private Integer stockNum;
 
-    @Schema(description = "商品上下架狀態", example = "true")
+    @Schema(description = "商品上下架狀態")
     private Boolean isOnSale;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @Schema(description = "建立時間", example = "2021-01-01 00:00:00")
-    private Date createTime;
+    @Schema(description = "建立時間", hidden = true)
+    @Column(updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private OffsetDateTime createTime;
 
+    @Schema(description = "更新時間", hidden = true)
+    private OffsetDateTime updateTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Schema(description = "更新時間")
-    private Date updateTime;
+    // getter and setter
 
     public Long getId() {
         return id;
@@ -133,19 +131,19 @@ public class Goods {
         this.isOnSale = isOnSale;
     }
 
-    public Date getCreateTime() {
+    public OffsetDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(OffsetDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public OffsetDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(OffsetDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

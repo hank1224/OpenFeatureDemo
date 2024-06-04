@@ -35,7 +35,7 @@ public class GoodsController {
 
     @PostMapping(path = "/")
     @Operation(summary = "Add an new Good")
-    public void saveGoods(@ParameterObject @RequestBody @Valid Goods goods) {
+    public void saveGoods(@RequestBody @Valid Goods goods) {
         goodsService.saveGoods(goods);
     }
 }
