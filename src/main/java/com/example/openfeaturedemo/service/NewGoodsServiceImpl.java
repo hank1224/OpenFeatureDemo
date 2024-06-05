@@ -2,8 +2,8 @@ package com.example.openfeaturedemo.service;
 
 import com.example.openfeaturedemo.entity.Goods;
 import com.example.openfeaturedemo.exception.BadRequestException;
-import com.example.openfeaturedemo.exception.ResourceNotFoundException;
 import com.example.openfeaturedemo.exception.ConflictException;
+import com.example.openfeaturedemo.exception.ResourceNotFoundException;
 import com.example.openfeaturedemo.repository.GoodsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,26 +66,6 @@ public class NewGoodsServiceImpl implements GoodsService {
         goodsRepository.save(goods);
     }
 
-    /* Check if the goods object is valid for save method. */
-
-    public static class GoodsValidationException extends RuntimeException {
-        public GoodsValidationException(String message) {
-            super(message);
-        }
-    }
-
-    public static class BadRequestException extends NewGoodsServiceImpl.GoodsValidationException {
-        public BadRequestException(String message) {
-            super(message);
-        }
-    }
-
-    public static class IllegalArgumentException extends NewGoodsServiceImpl.GoodsValidationException {
-        public IllegalArgumentException(String message) {
-            super(message);
-        }
-    }
-
     private void validateGoods(Goods goods) {
         // 檢查必填欄位是否為空
         checkRequiredField(goods.getProductCode(), "Product code");
@@ -93,11 +73,11 @@ public class NewGoodsServiceImpl implements GoodsService {
         checkRequiredField(goods.getGoodsCategoryId(), "Goods category ID");
 
         if (goods.getIsOnSale() == null) {
-            throw new NewGoodsServiceImpl.BadRequestException("Goods sell status (isOnSale) is required.");
+            throw new BadRequestException("Goods sell status (isOnSale) is required.");
         }
 
         if (goods.getStockNum() == null) {
-            throw new NewGoodsServiceImpl.BadRequestException("Stock number is required.");
+            throw new BadRequestException("Stock number is required.");
         }
 
         // 檢查數值範圍
@@ -108,19 +88,19 @@ public class NewGoodsServiceImpl implements GoodsService {
         // 檢查業務邏輯
         if (goods.getCostPrice() != null && goods.getSellingPrice() != null &&
                 goods.getSellingPrice() < goods.getCostPrice()) {
-            throw new NewGoodsServiceImpl.IllegalArgumentException("Selling price cannot be smaller than cost price.");
+            throw new BadRequestException("Selling price cannot be smaller than cost price.");
         }
     }
 
     private void checkRequiredField(String value, String fieldName) {
         if (value == null || value.trim().isEmpty()) {
-            throw new NewGoodsServiceImpl.BadRequestException(fieldName + " is required.");
+            throw new BadRequestException(fieldName + " is required.");
         }
     }
 
     private void checkNonNegative(Number value, String fieldName) {
         if (value != null && value.doubleValue() < 0) {
-            throw new NewGoodsServiceImpl.IllegalArgumentException(fieldName + " cannot be negative.");
+            throw new IllegalArgumentException(fieldName + " cannot be negative.");
         }
     }
 }

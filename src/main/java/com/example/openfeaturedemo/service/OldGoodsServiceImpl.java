@@ -1,6 +1,7 @@
 package com.example.openfeaturedemo.service;
 
 import com.example.openfeaturedemo.entity.Goods;
+import com.example.openfeaturedemo.exception.BadRequestException;
 import com.example.openfeaturedemo.exception.ConflictException;
 import com.example.openfeaturedemo.exception.ResourceNotFoundException;
 import com.example.openfeaturedemo.repository.GoodsRepository;
@@ -31,9 +32,7 @@ public class OldGoodsServiceImpl implements GoodsService {
     @Override
     public Goods getGoodsByProductCode(String productCode) throws ResourceNotFoundException{
         Optional<Goods> goodsOptional = goodsRepository.findByProductCode(productCode);
-        return goodsOptional.orElseThrow(() -> {
-            return new ResourceNotFoundException("Goods with product code " + productCode + " not found.");
-        });
+        return goodsOptional.orElseThrow(() -> new ResourceNotFoundException("Goods with product code " + productCode + " not found."));
     }
 
     @Override
@@ -47,26 +46,6 @@ public class OldGoodsServiceImpl implements GoodsService {
             throw new ConflictException("Product code already exists.");
         }
         goodsRepository.save(goods);
-    }
-
-    /* Check if the goods object is valid for save method. */
-
-    public static class GoodsValidationException extends RuntimeException {
-        public GoodsValidationException(String message) {
-            super(message);
-        }
-    }
-
-    public static class BadRequestException extends GoodsValidationException {
-        public BadRequestException(String message) {
-            super(message);
-        }
-    }
-
-    public static class IllegalArgumentException extends GoodsValidationException {
-        public IllegalArgumentException(String message) {
-            super(message);
-        }
     }
 
     private void validateGoods(Goods goods) {
@@ -91,7 +70,7 @@ public class OldGoodsServiceImpl implements GoodsService {
         // 檢查業務邏輯
         if (goods.getCostPrice() != null && goods.getSellingPrice() != null &&
                 goods.getSellingPrice() < goods.getCostPrice()) {
-            throw new IllegalArgumentException("Selling price cannot be smaller than cost price.");
+            throw new BadRequestException("Selling price cannot be smaller than cost price.");
         }
     }
 

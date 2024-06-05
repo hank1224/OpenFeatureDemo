@@ -22,7 +22,7 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - URL：[http://localhost:8080/page/multi-button](http://localhost:8080/page/multi-button)
 - 描述：可以同時使用多個 Feature Flag 供應商，並且可以隨時切換，擺脫依賴。
 
-### Case3: API version control
+### Case3: DynamicApiSwitcher
 - URL：[http://localhost:8080/page/](http://localhost:8080/page/)
 - 描述：在 直接DB查詢、Redis緩存查詢 兩個API版本之間做靈活切換，可以實施 A/B 測試、灰度發布等策略。
 - 具體細節：

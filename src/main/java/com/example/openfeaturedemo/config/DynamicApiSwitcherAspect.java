@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.UUID;
 
 /*
     AOP切面方法，將根據Flag來決定使用 oldGoodsService 還是 newGoodsService，
@@ -22,35 +23,38 @@ import java.util.HashMap;
 
 @Aspect
 @Component
-public class ArchitectureSwitchAspect {
+public class DynamicApiSwitcherAspect {
 
     private final GoodsService oldGoodsService;
 
     private final GoodsService newGoodsService;
 
-    public ArchitectureSwitchAspect(@Qualifier("oldGoodsService") GoodsService oldGoodsService,
+    public DynamicApiSwitcherAspect(@Qualifier("oldGoodsService") GoodsService oldGoodsService,
                                     @Qualifier("newGoodsService") GoodsService newGoodsService) {
         this.oldGoodsService = oldGoodsService;
         this.newGoodsService = newGoodsService;
     }
 
     // 主要的AOP方法，根據Flag來決定使用 oldGoodsService 還是 newGoodsService
-    @Around("@annotation(com.example.openfeaturedemo.annotation.UseNewArchitecture)")
+    @Around("@annotation(com.example.openfeaturedemo.annotation.DynamicApiSwitcher)")
     public Object switchArchitecture(ProceedingJoinPoint joinPoint) throws Throwable {
         // 獲取flag的值
-        boolean useNewArchitecture = getFeatureFlagValue();
+        boolean dynamicApiSwitcherFlag = getFeatureFlagValue();
 
         // 選擇Service
-        GoodsService selectedService = selectService(useNewArchitecture);
+        GoodsService selectedService = selectService(dynamicApiSwitcherFlag);
 
         // 調用選擇的Service的方法並處理返回值
         return invokeServiceMethod(joinPoint, selectedService);
     }
 
     private boolean getFeatureFlagValue() {
+
+        // 在 Server-Side 模擬來自不同用戶的UUID，務實上應該是從Request中獲取
         Client featbitClient = OpenFeatureAPI.getInstance().getClient("featbit");
-        EvaluationContext evalCtx = new ImmutableContext("user-key", new HashMap<>() {{
-            put("case", new Value("switchArchitecture"));
+        EvaluationContext evalCtx = new ImmutableContext("DynamicApiSwitcherFlag", new HashMap<>() {{
+            put("user-key", new Value(UUID.randomUUID().toString()));
+            put("name", new Value("OpenFeatureDemoServer"));
         }});
         return featbitClient.getBooleanValue("usenewarchitecture", false, evalCtx);
     }
