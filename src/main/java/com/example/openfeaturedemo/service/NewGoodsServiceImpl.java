@@ -11,10 +11,25 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+// TODO: POST方法與舊的無異，完全重疊，可以考慮抽取出來。
+
+/*
+    模擬逐步轉換至新架構的過程，透過FeatBit來控制使用新舊架構流量的比例。
+    此為新架構：
+        GET： 
+            1. 查詢Redis緩存，回傳結果（查無則下一步）
+            2. 從H2查詢獲取資料，存入Redis緩存
+            3. 回傳結果
+        POST：
+            檢查唯一性後，存入H2
+ */
 
 @Service("newGoodsService")
 public class NewGoodsServiceImpl implements GoodsService {
     private final GoodsRepository goodsRepository;
+
     private final RedisTemplate<String, Goods> redisTemplate;
 
     @Autowired
@@ -25,12 +40,15 @@ public class NewGoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods getGoodsByProductCode(String productCode) {
-        String key = "goods:" + productCode;
+        String key = "goodsProductCode:" + productCode;
         Goods goods = redisTemplate.opsForValue().get(key);
         if (goods == null) {
-            goods = goodsRepository.findByProductCode(productCode)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product code does not exist."));
-            redisTemplate.opsForValue().set(key, goods);
+            Optional<Goods> goodsOptional = goodsRepository.findByProductCode(productCode);
+            goods = goodsOptional.orElseThrow(() ->
+                    new ResourceNotFoundException("Goods with product code " + productCode + " not found.")
+            );
+            // 寫入Redis緩存並設定TTL
+            redisTemplate.opsForValue().set(key, goods, 5, TimeUnit.SECONDS);
         }
         return goods;
     }
@@ -45,45 +63,64 @@ public class NewGoodsServiceImpl implements GoodsService {
         if (existingGoods.isPresent()) {
             throw new ConflictException("Product code already exists.");
         }
-
         goodsRepository.save(goods);
-        String key = "goods:" + goods.getProductCode();
-        redisTemplate.opsForValue().set(key, goods);
+    }
+
+    /* Check if the goods object is valid for save method. */
+
+    public static class GoodsValidationException extends RuntimeException {
+        public GoodsValidationException(String message) {
+            super(message);
+        }
+    }
+
+    public static class BadRequestException extends NewGoodsServiceImpl.GoodsValidationException {
+        public BadRequestException(String message) {
+            super(message);
+        }
+    }
+
+    public static class IllegalArgumentException extends NewGoodsServiceImpl.GoodsValidationException {
+        public IllegalArgumentException(String message) {
+            super(message);
+        }
     }
 
     private void validateGoods(Goods goods) {
         // 檢查必填欄位是否為空
-        if (goods.getProductCode() == null || goods.getProductCode().trim().isEmpty()) {
-            throw new BadRequestException("Product code is required.");
-        }
-        if (goods.getGoodsName() == null || goods.getGoodsName().trim().isEmpty()) {
-            throw new BadRequestException("Goods name is required.");
-        }
-        if (goods.getGoodsCategoryId() == null || goods.getGoodsCategoryId().trim().isEmpty()) {
-            throw new BadRequestException("Goods category ID is required.");
-        }
+        checkRequiredField(goods.getProductCode(), "Product code");
+        checkRequiredField(goods.getGoodsName(), "Goods name");
+        checkRequiredField(goods.getGoodsCategoryId(), "Goods category ID");
+
         if (goods.getIsOnSale() == null) {
-            throw new BadRequestException("Goods sell status(isOnSale) is required.");
+            throw new NewGoodsServiceImpl.BadRequestException("Goods sell status (isOnSale) is required.");
         }
+
         if (goods.getStockNum() == null) {
-            throw new BadRequestException("Stock number is required.");
+            throw new NewGoodsServiceImpl.BadRequestException("Stock number is required.");
         }
 
         // 檢查數值範圍
-        if (goods.getCostPrice() != null && goods.getCostPrice() < 0) {
-            throw new IllegalArgumentException("Cost price cannot be negative.");
-        }
-        if (goods.getSellingPrice() != null && goods.getSellingPrice() < 0) {
-            throw new IllegalArgumentException("Selling price cannot be negative.");
-        }
-        if (goods.getStockNum() < 0) {
-            throw new IllegalArgumentException("Stock number cannot be negative.");
-        }
+        checkNonNegative(goods.getCostPrice(), "Cost price");
+        checkNonNegative(goods.getSellingPrice(), "Selling price");
+        checkNonNegative(goods.getStockNum(), "Stock number");
 
         // 檢查業務邏輯
         if (goods.getCostPrice() != null && goods.getSellingPrice() != null &&
                 goods.getSellingPrice() < goods.getCostPrice()) {
-            throw new IllegalArgumentException("Selling price cannot be smaller than cost price.");
+            throw new NewGoodsServiceImpl.IllegalArgumentException("Selling price cannot be smaller than cost price.");
+        }
+    }
+
+    private void checkRequiredField(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new NewGoodsServiceImpl.BadRequestException(fieldName + " is required.");
+        }
+    }
+
+    private void checkNonNegative(Number value, String fieldName) {
+        if (value != null && value.doubleValue() < 0) {
+            throw new NewGoodsServiceImpl.IllegalArgumentException(fieldName + " cannot be negative.");
         }
     }
 }

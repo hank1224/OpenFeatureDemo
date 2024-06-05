@@ -6,7 +6,6 @@ import com.example.openfeaturedemo.service.GoodsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,19 +26,16 @@ public class GoodsController {
     @GetMapping(path = "/{productCode}")
     @Operation(summary = "Get a Product by its ProductCode", description = "Using the ProductCode in business to obtain a product instead of using the ID.")
     public ResponseEntity<Goods> getGoodsByProductCode(@PathVariable String productCode) {
-        try {
-            Goods goods = goodsService.getGoodsByProductCode(productCode);
-            return new ResponseEntity<>(goods, HttpStatus.OK);
-        } catch (IllegalStateException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Goods goods = goodsService.getGoodsByProductCode(productCode);
+        return ResponseEntity.status(HttpStatus.OK).body(goods);
     }
 
     @UseNewArchitecture
     @PostMapping(path = "/")
     @Operation(summary = "Add an new Good")
-    public void saveGoods(@RequestBody @Valid Goods goods) {
+    public ResponseEntity<String> saveGoods(@RequestBody @Valid Goods goods) {
         goodsService.saveGoods(goods);
+        return ResponseEntity.status(HttpStatus.OK).body("Goods saved successfully");
     }
 }
 

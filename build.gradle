@@ -33,11 +33,9 @@ dependencies {
 
     // Database
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'org.postgresql:postgresql'
 
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    // 序列化 Goods 實體時，OffsetDateTime 類型的屬性 createTime 無法被序列化為 JSON。這是因為 Jackson 默認不支持 Java 8 的日期和時間類型。
     implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.11.1'
 
