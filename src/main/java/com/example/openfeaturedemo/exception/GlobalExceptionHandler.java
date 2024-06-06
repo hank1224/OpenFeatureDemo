@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponseDTO> handleCustomBadRequestException(BadRequestException ex) {
+    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(BadRequestException ex) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 "Bad Request",
                 ex.getMessage(),
@@ -37,15 +37,5 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT.value()
         );
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
-                "Bad Request",
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value()
-        );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
     }
 }

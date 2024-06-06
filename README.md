@@ -22,17 +22,34 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - URL：[http://localhost:8080/page/multi-button](http://localhost:8080/page/multi-button)
 - 描述：可以同時使用多個 Feature Flag 供應商，並且可以隨時切換，擺脫依賴。
 
-### Case3: WIP
-- URL：[http://localhost:8080/page/](http://localhost:8080/page/)
+### Case3: DynamicApiSwitcher
+- **較難展示，僅提供 Swagger 介面做實測。**
+- URL：[SwaggerPage](http://localhost:8080/swagger-ui/index.html)
+- 描述：模擬API版本切換，可以實施 A/B 測試、灰度發布等策略。
+- 具體細節：
+  - 使用AOP實現：透過切面來決定使用新舊Service，為一整個Service層的切換，非單一function。
+  - GET method
+    - 新：套用 Redis 緩存查詢
+    - 舊：直接進行 H2 查詢
+  - POST method
+    - 新舊無異，皆檢查唯一性後存入 H2
+
+### Case4: WIP
+- URL：[http://localhost:8080/page](http://localhost:8080/page)
 - 描述：...
 
 ## 此專案使用
 - [OpenFeature](https://openfeature.dev/)：使能夠自由切換 Provider
 - [Flagsmith](https://flagsmith.com)：主要 Feature Flag 供應商（Provider）
-- [FeatBit](https://featbit.co)：次要 Feature Flag 供應商，展示遷移過程
+- [FeatBit](https://featbit.co)：次要 Feature Flag 供應商
+
+
 - Spring Boot：整體框架
-- Spring Doc：生成 API 文件
-- Hibernate：ORM
+- Hibernate：使用 JPA
+- AOP：用切面實現API版本控制
+
+
+- Spring Doc：建立 Swagger API 文件
 - Thymeleaf：模板引擎
 
 ## Others

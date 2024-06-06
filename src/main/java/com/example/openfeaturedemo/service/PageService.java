@@ -51,4 +51,6 @@ public class PageService {
 
         return new MultiButtonDTO(flagsmithButtonIsEnable, featbitButtonIsEnable);
     }
+
+    /* DemoCase3:  */
 }
