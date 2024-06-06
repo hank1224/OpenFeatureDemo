@@ -23,8 +23,9 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - 描述：可以同時使用多個 Feature Flag 供應商，並且可以隨時切換，擺脫依賴。
 
 ### Case3: DynamicApiSwitcher
-- URL：[http://localhost:8080/page/](http://localhost:8080/page/)
-- 描述：在 直接DB查詢、Redis緩存查詢 兩個API版本之間做靈活切換，可以實施 A/B 測試、灰度發布等策略。
+- **較難展示，僅提供 Swagger 介面做實測。**
+- URL：[SwaggerPage](http://localhost:8080/swagger-ui/index.html)
+- 描述：模擬API版本切換，可以實施 A/B 測試、灰度發布等策略。
 - 具體細節：
   - 使用AOP實現：透過切面來決定使用新舊Service，為一整個Service層的切換，非單一function。
   - GET method
@@ -32,6 +33,10 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
     - 舊：直接進行 H2 查詢
   - POST method
     - 新舊無異，皆檢查唯一性後存入 H2
+
+### Case4: WIP
+- URL：[http://localhost:8080/page](http://localhost:8080/page)
+- 描述：...
 
 ## 此專案使用
 - [OpenFeature](https://openfeature.dev/)：使能夠自由切換 Provider

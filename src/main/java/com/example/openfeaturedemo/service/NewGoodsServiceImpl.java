@@ -40,15 +40,15 @@ public class NewGoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods getGoodsByProductCode(String productCode) {
-        String key = "goodsProductCode:" + productCode;
-        Goods goods = redisTemplate.opsForValue().get(key);
+        String redisProductCodeKey = "goodsProductCode:" + productCode;
+        Goods goods = redisTemplate.opsForValue().get(redisProductCodeKey);
         if (goods == null) {
-            Optional<Goods> goodsOptional = goodsRepository.findByProductCode(productCode);
-            goods = goodsOptional.orElseThrow(() ->
-                    new ResourceNotFoundException("Goods with product code " + productCode + " not found.")
-            );
+            goods = goodsRepository.getGoodsByProductCode(productCode);
+            if (goods == null) {
+                throw new ResourceNotFoundException("Goods with product code " + productCode + " not found.");
+            }
             // 寫入Redis緩存並設定TTL
-            redisTemplate.opsForValue().set(key, goods, 5, TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(redisProductCodeKey, goods, 10, TimeUnit.SECONDS);
         }
         return goods;
     }
@@ -59,8 +59,7 @@ public class NewGoodsServiceImpl implements GoodsService {
         validateGoods(goods);
 
         // 檢查唯一性
-        Optional<Goods> existingGoods = goodsRepository.findByProductCode(goods.getProductCode());
-        if (existingGoods.isPresent()) {
+        if (goodsRepository.existsByProductCode(goods.getProductCode())) {
             throw new ConflictException("Product code already exists.");
         }
         goodsRepository.save(goods);

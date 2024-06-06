@@ -1,4 +1,4 @@
-package com.example.openfeaturedemo.config;
+package com.example.openfeaturedemo.aspect;
 
 import com.example.openfeaturedemo.service.GoodsService;
 import dev.openfeature.sdk.*;
@@ -56,7 +56,7 @@ public class DynamicApiSwitcherAspect {
             put("user-key", new Value(UUID.randomUUID().toString()));
             put("name", new Value("OpenFeatureDemoServer"));
         }});
-        return featbitClient.getBooleanValue("usenewarchitecture", false, evalCtx);
+        return featbitClient.getBooleanValue("dynamic-api-switcher", false, evalCtx);
     }
 
     private GoodsService selectService(boolean useNewArchitecture) {

@@ -2,6 +2,9 @@ package com.example.openfeaturedemo.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
 
@@ -14,32 +17,41 @@ public class Goods {
     @Schema(hidden = true)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false) // 當你試圖將數據保存到數據庫時，數據庫會強制執行這些約束
     @Schema(description = "業務上商品編號", example = "ipad2025")
+    @NotNull(message = "Product code is required.") //當你接收數據（例如從HTTP請求中接收數據）或在應用程序內部傳遞數據時，會進行這些驗證。
+    @Size(min = 1, message = "Product code is required.")
     private String productCode;
 
     @Schema(description = "商品名稱", example = "iPad 2025")
+    @NotNull(message = "Goods name is required.")
+    @Size(min = 1, message = "Goods name is required.")
     private String goodsName;
 
     @Schema(description = "商品介紹", example = "2025年最新款iPad")
     private String goodsIntro;
 
     @Schema(description = "業務上分類編號", example = "ipad")
+    @NotNull(message = "Goods category ID is required.")
     private String goodsCategoryId;
 
     @Schema(description = "商品封面圖片", example = "https://www.example.com/ipad2025.jpg")
     private String goodsCoverImg;
 
     @Schema(description = "成本價", example = "10000")
+    @PositiveOrZero(message = "Cost price cannot be negative.")
     private Integer costPrice;
 
     @Schema(description = "售價", example = "12000")
+    @PositiveOrZero(message = "Selling price cannot be negative.")
     private Integer sellingPrice;
 
     @Schema(description = "庫存數量", example = "100")
+    @PositiveOrZero(message = "Stock number cannot be negative.")
     private Integer stockNum;
 
     @Schema(description = "商品上下架狀態")
+    @NotNull(message = "Goods sell status (isOnSale) is required.")
     private Boolean isOnSale;
 
     @Schema(description = "建立時間", hidden = true)
