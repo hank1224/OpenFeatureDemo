@@ -23,20 +23,71 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - 描述：可以同時使用多個 Feature Flag 供應商，並且可以隨時切換，擺脫依賴。
 
 ### Case3: DynamicApiSwitcher
-- **較難展示，僅提供 Swagger 介面做實測。**
+
+較難展示，僅提供 Swagger 介面做實測。
+
+使用AOP實現：透過切面來決定使用新舊Service，為一整個Service層的切換，非單一function。
+
 - URL：[SwaggerPage](http://localhost:8080/swagger-ui/index.html)
 - 描述：模擬API版本切換，可以實施 A/B 測試、灰度發布等策略。
 - 具體細節：
-  - 使用AOP實現：透過切面來決定使用新舊Service，為一整個Service層的切換，非單一function。
-  - GET method
-    - 新：套用 Redis 緩存查詢
-    - 舊：直接進行 H2 查詢
-  - POST method
-    - 新舊無異，皆檢查唯一性後存入 H2
+    - GET method
+      - 新：套用 Redis 緩存查詢
+      - 舊：直接進行 H2 查詢
+    - POST method
+      - 新舊無異，皆檢查唯一性後存入 H2
 
 ### Case4: WIP
 - URL：[http://localhost:8080/page](http://localhost:8080/page)
 - 描述：...
+
+## Deployment
+
+要去註冊 Flagsmith 帳號，記得用備用信箱，Sales會一直寄廣告超煩，也可以考慮直接用我的。
+
+### 啟動以下容器服務
+
+- [docker-envs](/docker-envs/docker-compose.yml):
+  - Redis: 作為 Case3 的緩存服務
+
+- FeatBit Localhost:
+  - 下載啟動：[FeatBit GitHub](https://github.com/featbit/featbit)
+  - [http://localhost:8081](http://localhost:8081)，用 0.0.0.0:8081 會開不了
+  - 官方有給[預設帳號密碼](https://github.com/featbit/featbit?tab=readme-ov-file#1-start-featbit)
+  - Mac 會遇到 port 被佔用問題：[見此解決](https://blog.csdn.net/zhang35/article/details/123895204)
+
+### 去服務商設定 Flags
+
+注意！FeatBit 會 Case Sensitivity，統一皆使用 Kebab Case，如：`featbit-button`。
+
+在個別服務中創建以下 Flag：
+#### [Flagsmith Setting](https://app.flagsmith.com)
+
+  - **Case1 Flag**
+    - KeyID: `secret-button`
+    - Type: Boolean
+    
+  - **Case2 Flag**
+    - KeyID: `flagsmith-button`
+    - Type: Boolean
+
+#### [FeatBit Setting](http://localhost:8081)
+
+  - **Case2 Flag**
+    - KeyID: `featbit-button`
+    - Type: Boolean
+    
+  - **Case3 Flag**
+    - KeyID: `dynamic-api-switcher`
+    - Type: Boolean
+
+### 建立 application.properties
+創建`application.properties`，可以參考`sample-application.properties`
+
+記得把 Flagsmith 和 FeatBit 的 API Key 填入
+*(有分 server/client side key，還沒研究清楚)*
+
+**Redis Port 設定為 6380**，因為 6379 是 FeatBit 的 Redis。
 
 ## 此專案使用
 - [OpenFeature](https://openfeature.dev/)：使能夠自由切換 Provider
@@ -51,9 +102,6 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 
 - Spring Doc：建立 Swagger API 文件
 - Thymeleaf：模板引擎
-
-## Others
-[SwaggerPage](http://localhost:8080/swagger-ui/index.html)
 
 ### Goods interface
 - [GET](http://localhost:8080/page/get-goods)
