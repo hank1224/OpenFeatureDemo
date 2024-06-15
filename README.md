@@ -37,9 +37,9 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
     - POST method
       - 新舊無異，皆檢查唯一性後存入 H2
 
-### Case4: WIP
-- URL：[http://localhost:8080/page](http://localhost:8080/page)
-- 描述：...
+### Case4: client-side-encryption
+- URL：[http://localhost:8080/page/client-side-encryption](http://localhost:8080/page/client-side-encryption)
+- 描述： WIP...
 
 ## Deployment
 

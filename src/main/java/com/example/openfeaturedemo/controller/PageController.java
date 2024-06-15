@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.controller;
 
+import com.example.openfeaturedemo.dto.FeatbitClientConfDTO;
 import com.example.openfeaturedemo.dto.MultiButtonDTO;
 import com.example.openfeaturedemo.dto.SecretButtonDTO;
 import com.example.openfeaturedemo.service.PageService;
@@ -42,4 +43,10 @@ public class PageController {
         return "multi-button";
     }
 
+    @GetMapping("/client-side-encryption")
+    public String clientSideEncryption(Model model) {
+        FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
+        model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
+        return "client-side-encryption";
+    }
 }

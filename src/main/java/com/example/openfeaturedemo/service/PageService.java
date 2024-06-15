@@ -1,5 +1,6 @@
 package com.example.openfeaturedemo.service;
 
+import com.example.openfeaturedemo.dto.FeatbitClientConfDTO;
 import com.example.openfeaturedemo.dto.MultiButtonDTO;
 import com.example.openfeaturedemo.dto.SecretButtonDTO;
 import dev.openfeature.sdk.*;
@@ -52,5 +53,18 @@ public class PageService {
         return new MultiButtonDTO(flagsmithButtonIsEnable, featbitButtonIsEnable);
     }
 
-    /* DemoCase3:  */
+    // @Value("${featbit.clientKey}") 會跟上面 put("name", new Value("OpenFeatureDemo") 撞死
+    // 使用完整類名還是遇到一堆鬼問題，所以這邊選擇讓 @Value 用完整類名
+    @org.springframework.beans.factory.annotation.Value("${featbit.clientKey}")
+    private String clientKey;
+
+    @org.springframework.beans.factory.annotation.Value("${featbit.streamingURL}")
+    private String featbitStreamingURL;
+
+    @org.springframework.beans.factory.annotation.Value("${featbit.eventURL}")
+    private String featbitEventURL;
+
+    public FeatbitClientConfDTO getFeatbitClientConf() {
+        return new FeatbitClientConfDTO(clientKey, featbitStreamingURL, featbitEventURL);
+    }
 }

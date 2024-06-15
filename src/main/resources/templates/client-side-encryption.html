@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
+<head>
+    <title>Feature Flags with Customer ID</title>
+    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css"> <!-- 用途：自動美化排版 -->
+</head>
+<body>
+<h1>Enter your Customer ID</h1>
+<form id="featureForm">
+    <label for="customerId">
+        <input type="text" id="customerId" name="customerId" placeholder="Enter Customer ID" required>
+    </label>
+    <button type="button" id="submitBtn">Submit</button>
+</form>
+
+<div id="config" th:if="${featbitClientConfDTO != null}"
+     th:attr="data-client-key=${featbitClientConfDTO.clientKey},
+              data-featbit-streaming-url=${featbitClientConfDTO.featbitStreamingURL},
+              data-featbit-event-url=${featbitClientConfDTO.featbitEventURL}">
+    <h2>featbitClientConfDTO</h2>
+    <p>clientKey: <span th:text="${featbitClientConfDTO.clientKey}"></span></p>
+    <p>featbitStreamingURL: <span th:text="${featbitClientConfDTO.featbitStreamingURL}"></span></p>
+    <p>featbitEventURL: <span th:text="${featbitClientConfDTO.featbitEventURL}"></span></p>
+</div>
+
+<div th:unless="${featbitClientConfDTO != null}">
+    <p>Missing config!</p>
+</div>
+
+<h2>Log</h2>
+
+<div id="result"></div>
+
+<div id="errorLog" style="color: red;"></div>
+
+<script th:src="@{/js/client-side-encryption.js}"></script> <!-- 自行打包的js -->
+
+</body>
+</html>
