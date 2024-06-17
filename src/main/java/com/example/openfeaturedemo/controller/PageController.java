@@ -49,4 +49,11 @@ public class PageController {
         model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
         return "client-side-encryption";
     }
+
+    @GetMapping("/openfeature-client-side")
+    public String openfeatureClientSide(Model model) {
+        FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
+        model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
+        return "openfeature-client-side";
+    }
 }

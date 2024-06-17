@@ -45,6 +45,7 @@ out/
 
 ### Node.js ###
 # compiled output
+src/main/resources/dist/
 /dist
 /tmp
 /out-tsc

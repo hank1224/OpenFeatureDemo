@@ -46,7 +46,7 @@ async function evaluateFeature() {
         document.getElementById('errorLog').innerText = '';
 
 
-        // Create provider
+        // Create fbProvider
         const provider = new FbProvider(option);
 
         // uncomment this line if you want to set a different context

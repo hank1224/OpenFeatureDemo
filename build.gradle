@@ -45,6 +45,9 @@ dependencies {
     implementation 'dev.openfeature.contrib.providers:flagsmith:0.0.8'
     implementation 'co.featbit:featbit-openfeature-provider-java-server:1.0.0'
 
+    // WebDev
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
 }
 
 tasks.named('test') {

@@ -37,7 +37,11 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
     - POST method
       - 新舊無異，皆檢查唯一性後存入 H2
 
-### Case4: client-side-encryption
+### Case4: OpenFeature Client-side
+- URL：[http://localhost:8080/page/openfeature-client-side](http://localhost:8080/page/openfeature-client-side)
+- 描述： 僅展示如何使用前端 JS 來取得 Feature Flag 值。
+
+### Case5: client-side-encryption
 - URL：[http://localhost:8080/page/client-side-encryption](http://localhost:8080/page/client-side-encryption)
 - 描述： WIP...
 
@@ -55,6 +59,10 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
   - [http://localhost:8081](http://localhost:8081)，用 0.0.0.0:8081 會開不了
   - 官方有給[預設帳號密碼](https://github.com/featbit/featbit?tab=readme-ov-file#1-start-featbit)
   - Mac 會遇到 port 被佔用問題：[見此解決](https://blog.csdn.net/zhang35/article/details/123895204)
+
+### npm install 建立js檔案
+
+WIP...
 
 ### 去服務商設定 Flags
 
