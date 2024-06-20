@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
+<meta charset="UTF-8">
 <head>
     <title>OpenFeature Client-side Demo</title>
     <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css"> <!-- 用途：自動美化排版 -->
 </head>
 <body>
-<h1>Enter your Customer ID</h1>
+<h1>Client端的 js 呼叫</h1>
+<p>適用情況為EvalContent並不頻繁更動的場景</p>
+<p>例如：客戶訂閱層級、</p>
+
 <form id="featureForm">
-    <label for="customerId">
-        <input type="text" id="customerId" name="customerId" placeholder="Enter Customer ID" required>
+    <label for="clientLevelValue">
+        <input type="text" id="clientLevelValue" name="clientLevelValue" placeholder="Which Level you are in?" required>
     </label>
     <button type="button" id="submitBtn">Submit</button>
 </form>

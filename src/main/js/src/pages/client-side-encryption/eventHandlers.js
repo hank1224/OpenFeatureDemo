@@ -1,4 +1,4 @@
-import { evaluateFeature } from './featureEvaluator';
+import { evaluateFeature } from '../openfeature-client-side/featureEvaluator.js';
 
 export function setupEventHandlers() {
     document.addEventListener('DOMContentLoaded', function() {

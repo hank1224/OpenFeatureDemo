@@ -2,25 +2,23 @@ import {OpenFeature, ProviderEvents} from '@openfeature/web-sdk';
 
 export async function evaluateFeature() {
     try {
-        const customerId = document.getElementById('customerId').value;
-        const user = {
-            name: 'Case4',
-            keyId: 'OpenFeatureDemoClient',
-            customizedProperties: [],
-        };
+        const clientLevelValue = document.getElementById('clientLevelValue').value;
 
         document.getElementById('result').innerText = '';
         document.getElementById('errorLog').innerText = '';
 
         OpenFeature.addHandler(ProviderEvents.ConfigurationChanged, (eventDetails) => {
             const client = OpenFeature.getClient();
-            const context = { customerId: customerId };
-            const flagValue = client.getBooleanValue('featbit-button', false);
+            const context = { clientLevelValue: clientLevelValue };
+            const flagValue = client.getStringValue('client-level-value', '1', context);
             console.log({...eventDetails, value});
         });
 
         const client = OpenFeature.getClient();
-        const flagValue = client.getBooleanValue('featbit-button', false);
+        const options = {
+            clientLevelValue: clientLevelValue
+        };
+        const flagValue = client.getStringValue('client-level-value', '1', options);
         document.getElementById('result').innerText = `Feature flag result: ${flagValue}`;
 
     } catch (error) {

@@ -46,7 +46,7 @@ dependencies {
     implementation 'co.featbit:featbit-openfeature-provider-java-server:1.0.0'
 
     // WebDev
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
 }
 

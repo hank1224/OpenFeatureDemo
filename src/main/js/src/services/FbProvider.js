@@ -3,9 +3,8 @@ import { FbProvider } from '@featbit/openfeature-provider-js-client';
 import { OpenFeature } from '@openfeature/web-sdk';
 import { clientKey, featbitStreamingUrl, featbitEventUrl } from './FbClientConfig';
 
-// 添加用户信息
 const user = {
-    name: 'Case4',
+    name: 'Case4:' + Math.random().toString(8).substring(7),
     keyId: 'OpenFeatureDemoClient',
     customizedProperties: [],
 };
