@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
+<!-- 強制使用暗色模式，因為亮色在我這顯示好像有點問題 -->
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant" data-color-scheme="dark">
 <meta charset="UTF-8">
 <head>
     <title>OpenFeature Client-side Demo</title>
@@ -7,35 +8,41 @@
 </head>
 <body>
 <h1>Client端的 js 呼叫</h1>
-<p>適用情況為EvalContent並不頻繁更動的場景</p>
-<p>例如：客戶訂閱層級、</p>
+<p>適用情況為EvalContent(上下文)並不頻繁更動的場景，在此上下文為user1，從FeatBit來控制他能取得的新功能。</p>
+<p>這和Server-side的機制不同：</p>
+<ul>
+    <li>由於有Event監聽功能，能夠自動取得FeatBit的Flag改動，將會自動更新Flag數值</li>
+    <li>Client-side在註冊Provider時會載入Flag Cache在本地，都只讀Cache數值，並配置Event監聽隨時更改</li>
+</ul>
 
-<form id="featureForm">
-    <label for="clientLevelValue">
-        <input type="text" id="clientLevelValue" name="clientLevelValue" placeholder="Which Level you are in?" required>
-    </label>
-    <button type="button" id="submitBtn">Submit</button>
+<h2>EvalContent</h2>
+<form id="EvalContentForm">
+        <label for="keyId">keyId:</label>
+        <input type="text" id="keyId" name="keyId" value="user1" disabled>
+        <button type="button" class="active" id="submitBtn">啟動FlagEvaluation</button>
 </form>
 
-<div id="fb-client-config" th:if="${featbitClientConfDTO != null}"
-     th:attr="data-client-key=${featbitClientConfDTO.clientKey},
-              data-featbit-streaming-url=${featbitClientConfDTO.featbitStreamingURL},
-              data-featbit-event-url=${featbitClientConfDTO.featbitEventURL}">
-    <h2>featbitClientConfDTO</h2>
-    <p>clientKey: <span th:text="${featbitClientConfDTO.clientKey}"></span></p>
-    <p>featbitStreamingURL: <span th:text="${featbitClientConfDTO.featbitStreamingURL}"></span></p>
-    <p>featbitEventURL: <span th:text="${featbitClientConfDTO.featbitEventURL}"></span></p>
-</div>
-
-<div th:unless="${featbitClientConfDTO != null}">
-    <p>Missing config!</p>
-</div>
-
-<h2>Log</h2>
+<h2>Flag Evaluation</h2>
 
 <div id="result"></div>
 
 <div id="errorLog" style="color: red;"></div>
+<br>
+<h2>Dev info</h2>
+<div id="fb-client-config" th:if="${featbitClientConfDTO != null}"
+     th:attr="data-client-key=${featbitClientConfDTO.clientKey},
+              data-featbit-streaming-url=${featbitClientConfDTO.featbitStreamingURL},
+              data-featbit-event-url=${featbitClientConfDTO.featbitEventURL}">
+    <h3>featbitClientConfDTO(應加密)</h3>
+
+    <div th:unless="${featbitClientConfDTO != null}">
+        <p style="color: red;"><b>Config is Missing!</b></p>
+    </div>
+    clientKey: <span th:text="${featbitClientConfDTO.clientKey}"></span><br>
+    featbitStreamingURL: <span th:text="${featbitClientConfDTO.featbitStreamingURL}"></span><br>
+    featbitEventURL: <span th:text="${featbitClientConfDTO.featbitEventURL}"></span>
+</div>
+
 
 <script type="module" th:src="@{/js/openfeature-client-side.bundle.js}"></script> <!-- 自行打包的js -->
 

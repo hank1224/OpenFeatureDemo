@@ -39,7 +39,7 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 
 ### Case4: OpenFeature Client-side
 - URL：[http://localhost:8080/page/openfeature-client-side](http://localhost:8080/page/openfeature-client-side)
-- 描述： 僅展示如何使用前端 JS 來取得 Feature Flag 值。
+- 描述： 展示如何使用 JS 操作Client-side，並展示與Server-side之差異。
 
 ### Case5: client-side-encryption
 - URL：[http://localhost:8080/page/client-side-encryption](http://localhost:8080/page/client-side-encryption)
@@ -88,12 +88,16 @@ WIP...
   - **Case3 Flag**
     - KeyID: `dynamic-api-switcher`
     - Type: Boolean
+  
+  - **Case4 Flag**
+    - KeyID: `openfeature-client-side`
+    - Type: String
+      - 設定新功能與舊功能字串即可
 
 ### 建立 application.properties
 創建`application.properties`，可以參考`sample-application.properties`
 
 記得把 Flagsmith 和 FeatBit 的 API Key 填入
-*(有分 server/client side key，還沒研究清楚)*
 
 **Redis Port 設定為 6380**，因為 6379 是 FeatBit 的 Redis。
 
@@ -103,13 +107,17 @@ WIP...
 - [FeatBit](https://featbit.co)：次要 Feature Flag 供應商
 
 
-- Spring Boot：整體框架
+- Spring Boot：OpenFeature Server-side
 - Hibernate：使用 JPA
 - AOP：用切面實現API版本控制
 
 
 - Spring Doc：建立 Swagger API 文件
 - Thymeleaf：模板引擎
+
+
+- JavaScript：OpenFeature Client-side
+- webpack：打包 JS 檔案
 
 ### Goods interface
 - [GET](http://localhost:8080/page/get-goods)

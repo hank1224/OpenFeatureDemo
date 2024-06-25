@@ -18,6 +18,8 @@ const option = {
 
 const provider = new FbProvider(option);
 
+
+
 let isProviderReady = new Promise((resolve) => {
     OpenFeature.setProviderAndWait(provider).then(() => {
         console.log('FbProvider is ready');
