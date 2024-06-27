@@ -43,17 +43,17 @@ public class PageController {
         return "multi-button";
     }
 
-    @GetMapping("/client-side-encryption")
-    public String clientSideEncryption(Model model) {
-        FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
-        model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
-        return "client-side-encryption";
-    }
-
     @GetMapping("/openfeature-client-side")
     public String openfeatureClientSide(Model model) {
         FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
         model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
         return "openfeature-client-side";
+    }
+
+    @GetMapping("/before-hook-email-crypto")
+    public String beforeHookEmailCrypto(Model model) {
+        FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
+        model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
+        return "before-hook-email-crypto";
     }
 }

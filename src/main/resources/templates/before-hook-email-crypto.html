@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- 強制使用暗色模式，因為亮色在我這顯示好像有點問題 -->
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant" data-color-scheme="dark">
+<meta charset="UTF-8">
+<head>
+    <title>Before-Hook with user-email Crypto</title>
+    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css"> <!-- 用途：自動美化排版 -->
+
+    <!-- TODO: 獨立CSS？   -->
+    <style>
+        fieldset {
+            display: flex;        /* 使用 Flexbox */
+            justify-content: center; /* 水平居中 */
+            align-items: center;  /* 垂直居中 */
+            flex-direction: row;  /* 元素水平排列 */
+            padding: 10px;        /* 添加一些內邊距 */
+        }
+
+        fieldset div {
+            margin: 0 10px;
+        }     /* 在兩個 radio 按鈕*/
+
+        input[type="radio"],
+        label {
+            display: inline; /* 使 input 和 label 在同一行內 */
+            vertical-align: middle; /* 垂直對齊 */
+        }
+
+    </style>
+
+</head>
+<body>
+<h1>Before Hook 用於加密敏感 EvalContent</h1>
+<p>假設必須在 Server-side 做機敏資料(Email)的Flag評估（違反安全最佳實踐，但假設業務上必須）</p>
+<p>在 Before Hook 中對用戶的電子郵件進行加密，然後記錄這個加密後的電子郵件與功能使用情況</p>
+<p>Hook 使用過程：</p>
+<ul>
+    <li>用戶(唯一Email)使用新功能，需要儲存 log，但不能洩漏且log不包含個資。</li>
+    <li>Before Hook 評估前觸發，對 Email 進行 Hash，然後記錄這個 Hash 值，保證同一人值相同。</li>
+    <li>After Hook 成功時觸發，驗證成功的 Flag Value。</li>
+    <li>Error Hook 失敗時觸發，假設該Flag不存在情況，發送儲存錯誤log</li>
+    <li>Finally Hook 一定觸發，傳送儲存所有log。</li>
+</ul>
+
+
+<!-- 步驟一 -->
+<div id="inputEmail" style="display: block">
+    <h1>開始 Demo</h1>
+
+    <h2>步驟一：假設客戶Email</h2>
+    <label for="userEmailInput">userEmail:</label>
+    <input type="text" id="userEmailInput" name="userEmailInput" value="someone@example.com" required>
+
+    <label for="userEmailHashPreview">SHA-256 Hash:</label>
+    <input type="text" id="userEmailHashPreview" name="userEmailHashPreview" placeholder="SHA-256 Preview" value="" disabled>
+
+    <button type="button" class="active" id="userEmailInputBtn">下一步</button>
+</div>
+
+
+
+<!-- 步驟二 -->
+<div id="evalOption" style="display: none;">
+    <h2>步驟二：選擇 Flag Eval 方式</h2>
+    <fieldset>
+        <legend>評估過程是否出錯？</legend>
+        <div>
+            <input type="radio" id="evalSuccess" name="evalOutcome" value="success" checked>
+            <label for="evalSuccess">將成功評估</label>
+        </div>
+        <div>
+            <input type="radio" id="evalError" name="evalOutcome" value="error">
+            <label for="evalError">將觸發錯誤</label>
+        </div>
+    </fieldset>
+
+    <input type="button" id="serverSideEvalBtn" value="送往Server-side評估">
+    <input type="button" id="clientSideEvalBtn" value="本地Client-side評估">
+    <input type="reset" id="evalOptionResetBtn" value="重新輸入userEmail">
+</div>
+
+<!--
+    TODO: 再下一步：
+        Server side: 打API等回傳值顯示
+        Client side: 用js打
+     顯示於此div，並且若有錯誤訊息提示去Redis看
+     重設按鈕、清資料從頭開始
+-->
+<!-- 步驟三 -->
+<div id="evalResult" style="display: none;">
+    <h2>步驟三：檢視 Eval 結果</h2>
+    <h3>Before-Hook Hash</h3>
+    <h3>After Hook Log</h3>
+    <h3>Error-Hook Log</h3>
+    <h3>Finally-Hook Log</h3>
+</div>
+
+<div id="result"></div>
+
+
+<div id="errorLog" style="color: red;"></div>
+
+
+
+<h2>Dev info</h2>
+<div id="fb-client-config" th:if="${featbitClientConfDTO != null}"
+     th:attr="data-client-key=${featbitClientConfDTO.clientKey},
+              data-featbit-streaming-url=${featbitClientConfDTO.featbitStreamingURL},
+              data-featbit-event-url=${featbitClientConfDTO.featbitEventURL}">
+
+    clientKey: <span th:text="${featbitClientConfDTO.clientKey}"></span><br>
+    featbitStreamingURL: <span th:text="${featbitClientConfDTO.featbitStreamingURL}"></span><br>
+    featbitEventURL: <span th:text="${featbitClientConfDTO.featbitEventURL}"></span>
+
+    <div th:unless="${featbitClientConfDTO != null}">
+        <p style="color: red;"><b>Config is Missing!</b></p>
+    </div>
+
+</div>
+
+
+<script type="module" th:src="@{/js/before-hook-email-crypto.bundle.js}"></script> <!-- 自行打包的js -->
+
+</body>
+</html>

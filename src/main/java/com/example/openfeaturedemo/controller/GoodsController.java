@@ -4,8 +4,6 @@ import com.example.openfeaturedemo.annotation.DynamicApiSwitcher;
 import com.example.openfeaturedemo.entity.Goods;
 import com.example.openfeaturedemo.service.GoodsService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/goods")
-@Tag(name = "Goods API", description = "simple goods CRUD for Demo use.")
+@Tag(name = "Goods API", description = "simple goods CRUD.")
 public class GoodsController {
     private final GoodsService goodsService;
 
@@ -39,4 +37,3 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.OK).body("Goods saved successfully");
     }
 }
-

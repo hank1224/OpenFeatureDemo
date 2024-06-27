@@ -41,9 +41,9 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 - URL：[http://localhost:8080/page/openfeature-client-side](http://localhost:8080/page/openfeature-client-side)
 - 描述： 展示如何使用 JS 操作Client-side，並展示與Server-side之差異。
 
-### Case5: client-side-encryption
-- URL：[http://localhost:8080/page/client-side-encryption](http://localhost:8080/page/client-side-encryption)
-- 描述： WIP...
+### Case5: Before-Hook with user-email Crypto
+- URL：[http://localhost:8080/page/before-hook-email-crypto](http://localhost:8080/page/before-hook-email-crypto)
+- 描述： 使用 Before Hook 來加解密用戶Email，防止傳遞EvalContent時洩漏隱私。
 
 ## Deployment
 

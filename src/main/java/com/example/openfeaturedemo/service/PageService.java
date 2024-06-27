@@ -36,6 +36,7 @@ public class PageService {
         );
     }
 
+
     /* DemoCase2: Multi-Button */
     public MultiButtonDTO getMultiButtonFlag() {
         /* Flagsmith */
@@ -54,7 +55,7 @@ public class PageService {
     }
 
     // @Value("${featbit.clientKey}") 會跟上面 put("name", new Value("OpenFeatureDemo") 撞死
-    // 使用完整類名還是遇到一堆鬼問題，所以這邊選擇讓 @Value 用完整類名
+    // 讓 new Value 使用完整類名還是遇到一堆鬼問題，所以這邊選擇讓 @Value 用完整類名
     @org.springframework.beans.factory.annotation.Value("${featbit.clientKey}")
     private String clientKey;
 
