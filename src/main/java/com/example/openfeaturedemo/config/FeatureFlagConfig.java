@@ -28,7 +28,8 @@ public class FeatureFlagConfig {
                 .build();
 
         FBProvider provider = new FBProvider(featbitEnvSecret, featbitConfig);
-
+        // Clients can be assigned to a domain. A domain is a logical identifier which can be used to associate clients with a particular provider.
+        // registering a provider to a domain: featbit
         OpenFeatureAPI.getInstance().setProvider("featbit", provider);
         return provider;
     }
@@ -42,7 +43,7 @@ public class FeatureFlagConfig {
                 .apiKey(flagsmithApiKey)
                 .build();
         FlagsmithProvider provider = new FlagsmithProvider(flagsmithOptions);
-
+        // registering a provider to a domain: flagsmith
         OpenFeatureAPI.getInstance().setProvider("flagsmith", provider);
         return provider;
     }

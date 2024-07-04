@@ -92,5 +92,19 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
+
+### Yarn 2.0
+# Using Zero-Installs(https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored)
+# https://github.com/fengzilong/pso/issues/28
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # next.js build output
 .next
+
+

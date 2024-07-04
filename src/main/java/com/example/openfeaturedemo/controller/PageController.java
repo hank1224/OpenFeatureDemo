@@ -1,14 +1,13 @@
 package com.example.openfeaturedemo.controller;
 
-import com.example.openfeaturedemo.dto.FeatbitClientConfDTO;
-import com.example.openfeaturedemo.dto.MultiButtonDTO;
-import com.example.openfeaturedemo.dto.SecretButtonDTO;
+import com.example.openfeaturedemo.dto.*;
 import com.example.openfeaturedemo.service.PageService;
+import dev.openfeature.sdk.FlagEvaluationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(path = "/page")
@@ -55,5 +54,13 @@ public class PageController {
         FeatbitClientConfDTO featbitClientConfDTO = pageService.getFeatbitClientConf();
         model.addAttribute("featbitClientConfDTO", featbitClientConfDTO);
         return "before-hook-email-crypto";
+    }
+
+    @PostMapping("/before-hook-email-crypto/server-eval")
+    public ModelAndView beforeHookEmailCryptoServerEval(@ModelAttribute ServerEvalRequestDTO serverEvalRequestRequest) {
+        ModelAndView modelAndView = new ModelAndView("before-hook-email-crypto-server-eval");
+        FlagEvaluationDetails<Boolean> flagEvaluationDetails = pageService.beforeHookEmailCrypto(serverEvalRequestRequest);
+        modelAndView.addObject("FlagEvaluationDetails", flagEvaluationDetails);
+        return modelAndView;
     }
 }

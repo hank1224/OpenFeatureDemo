@@ -1,8 +1,7 @@
 package com.example.openfeaturedemo.service;
 
-import com.example.openfeaturedemo.dto.FeatbitClientConfDTO;
-import com.example.openfeaturedemo.dto.MultiButtonDTO;
-import com.example.openfeaturedemo.dto.SecretButtonDTO;
+import com.example.openfeaturedemo.dto.*;
+import com.example.openfeaturedemo.hooks.BeforeHookEmailCryptoHook;
 import dev.openfeature.sdk.*;
 import org.springframework.stereotype.Service;
 
@@ -67,5 +66,26 @@ public class PageService {
 
     public FeatbitClientConfDTO getFeatbitClientConf() {
         return new FeatbitClientConfDTO(clientKey, featbitStreamingURL, featbitEventURL);
+    }
+
+    /* DemoCase5: Before-Hook-Email-Crypto */
+    public FlagEvaluationDetails<Boolean> beforeHookEmailCrypto(ServerEvalRequestDTO serverEvalRequest) {
+        String flagKey = "before-hook-email-crypto";
+
+        // shouldFlagEvalFailed: 將產生flagKey不存在錯誤
+        if (serverEvalRequest.isShouldFlagEvalFailed()) {
+            flagKey += "-failed";
+        }
+
+        Client featbitClient = OpenFeatureAPI.getInstance().getClient("featbit");
+        EvaluationContext evalCtx = new MutableContext(new HashMap<String, Value>() {{
+            put("userEmailSubmit", new Value(serverEvalRequest.getUserEmailSubmit()));
+            put("shouldBeforeHookFailed", new Value(serverEvalRequest.isShouldBeforeHookFailed()));
+            put("shouldAfterHookFailed", new Value(serverEvalRequest.isShouldAfterHookFailed()));
+        }});
+
+        featbitClient.addHooks(new BeforeHookEmailCryptoHook());  // 使用自定義的 Hook Class
+
+        return featbitClient.getBooleanDetails(flagKey, false, evalCtx);
     }
 }

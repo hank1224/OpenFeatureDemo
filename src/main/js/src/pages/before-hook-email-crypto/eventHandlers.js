@@ -40,21 +40,9 @@ export function setupEventHandlers() {
     });
 
     // 送往Server-side進行評估：監聽 serverSideEvalBtn 的點擊事件
-    document.getElementById('serverSideEvalBtn').addEventListener('click', function() {
-        const evalOutcome = document.querySelector('input[name="evalOutcome"]:checked').value;
-        const userEmailInput = document.getElementById('userEmailInput').value;
-
-        fetch('api/v1/flag-eval/before-hook-email-crypto', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userEmailInput: userEmailInput,
-                evalOutcome: evalOutcome })
-        })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+    document.getElementById('evalOptionForm').addEventListener('submit', function() {
+        // 在表單提交前，將 userEmailInput 的值複製到 userEmailSubmit 後才能讓 Form 一起傳送。
+        document.getElementById('userEmailSubmit').value = document.getElementById('userEmailInput').value;
     });
+
 }

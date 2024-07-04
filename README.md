@@ -117,6 +117,7 @@ WIP...
 
 
 - JavaScript：OpenFeature Client-side
+- Yarn2：管理 JS 套件
 - webpack：打包 JS 檔案
 
 ### Goods interface

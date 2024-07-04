@@ -38,10 +38,14 @@
     <li>用戶(唯一Email)使用新功能，需要儲存 log，但不能洩漏且log不包含個資。</li>
     <li>Before Hook 評估前觸發，對 Email 進行 Hash，然後記錄這個 Hash 值，保證同一人值相同。</li>
     <li>After Hook 成功時觸發，驗證成功的 Flag Value。</li>
-    <li>Error Hook 失敗時觸發，假設該Flag不存在情況，發送儲存錯誤log</li>
+    <li>Error Hook 失敗時觸發，假設該 Flag 不存在情況，發送儲存錯誤log</li>
     <li>Finally Hook 一定觸發，傳送儲存所有log。</li>
 </ul>
 
+<ul>
+    <li>Server-Side: 用API打回去讓伺服器處理全程，因為這包@openfeature/web-sdk僅支援Client-side</li>
+    <li>Client-Side: 直接用js的Client-side實做</li>
+</ul>
 
 <!-- 步驟一 -->
 <div id="inputEmail" style="display: block">
@@ -62,21 +66,45 @@
 <!-- 步驟二 -->
 <div id="evalOption" style="display: none;">
     <h2>步驟二：選擇 Flag Eval 方式</h2>
-    <fieldset>
-        <legend>評估過程是否出錯？</legend>
-        <div>
-            <input type="radio" id="evalSuccess" name="evalOutcome" value="success" checked>
-            <label for="evalSuccess">將成功評估</label>
-        </div>
-        <div>
-            <input type="radio" id="evalError" name="evalOutcome" value="error">
-            <label for="evalError">將觸發錯誤</label>
-        </div>
-    </fieldset>
-
-    <input type="button" id="serverSideEvalBtn" value="送往Server-side評估">
-    <input type="button" id="clientSideEvalBtn" value="本地Client-side評估">
-    <input type="reset" id="evalOptionResetBtn" value="重新輸入userEmail">
+    <form action="/page/before-hook-email-crypto/server-eval" method="post" id="evalOptionForm">
+        <input type="hidden" id="userEmailSubmit" name="userEmailSubmit" value="">
+        <fieldset>
+            <legend>評估過程是否出錯並觸發 Error Hook？（FlagKey不存在，表達Flag系統本身出錯）</legend>
+            <div>
+                <input type="radio" id="evalSuccess" name="shouldFlagEvalFailed" value="false" checked>
+                <label for="evalSuccess">將成功評估</label>
+            </div>
+            <div>
+                <input type="radio" id="evalError" name="shouldFlagEvalFailed" value="true">
+                <label for="evalError">錯誤：FlagKey不存在</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Before Hook 自定義處理是否出錯？（自定義程式的RunTimeError）</legend>
+            <div>
+                <input type="radio" id="beforeHookSuccess" name="shouldBeforeHookFailed" value="false" checked>
+                <label for="beforeHookSuccess">將正常運行</label>
+            </div>
+            <div>
+                <input type="radio" id="beforeHookError" name="shouldBeforeHookFailed" value="true">
+                <label for="beforeHookError">錯誤：Hash失敗</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>After Hook 檢查是否出錯？（驗證 Before Hook 的自定義處理結果）</legend>
+            <div>
+                <input type="radio" id="afterHookCheckSuccess" name="shouldAfterHookFailed" value="false" checked>
+                <label for="afterHookCheckSuccess">將檢查成功</label>
+            </div>
+            <div>
+                <input type="radio" id="afterHookCheckError" name="shouldAfterHookFailed" value="true">
+                <label for="afterHookCheckError">錯誤：Hash值異常</label>
+            </div>
+        </fieldset>
+        <input type="submit" id="serverSideEvalBtn" value="送往Server-side評估">
+        <input type="button" id="clientSideEvalBtn" value="本地Client-side評估">
+        <input type="reset" id="evalOptionResetBtn" value="重新輸入userEmail">
+    </form>
 </div>
 
 <!--
@@ -84,7 +112,6 @@
         Server side: 打API等回傳值顯示
         Client side: 用js打
      顯示於此div，並且若有錯誤訊息提示去Redis看
-     重設按鈕、清資料從頭開始
 -->
 <!-- 步驟三 -->
 <div id="evalResult" style="display: none;">
