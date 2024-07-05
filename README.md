@@ -44,6 +44,7 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
 ### Case5: Before-Hook with user-email Crypto
 - URL：[http://localhost:8080/page/before-hook-email-crypto](http://localhost:8080/page/before-hook-email-crypto)
 - 描述： 使用 Before Hook 來加解密用戶Email，防止傳遞EvalContent時洩漏隱私。
+- 實作包含：Server/Client端、四種Hook、Error模擬、Logging。
 
 ## Deployment
 
@@ -93,6 +94,10 @@ WIP...
     - KeyID: `openfeature-client-side`
     - Type: String
       - 設定新功能與舊功能字串即可
+  
+  - **Case5 Flag**
+  - KeyID: `before-hook-email-crypto`
+  - Type: Boolean
 
 ### 建立 application.properties
 創建`application.properties`，可以參考`sample-application.properties`

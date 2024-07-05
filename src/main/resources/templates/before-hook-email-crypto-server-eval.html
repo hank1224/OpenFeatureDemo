@@ -10,9 +10,18 @@
 <body>
 
 <h1>Server-side Eval Result</h1>
-<p th:text="FlagEvaluationDetails"></p>
+<div>
+    <p><strong>Flag Key:</strong> <span th:text="${FlagEvaluationDetails.flagKey}"></span></p>
+    <p><strong>Value:</strong> <span th:text="${FlagEvaluationDetails.value}"></span></p>
+    <p><strong>Variant:</strong> <span th:text="${FlagEvaluationDetails.variant}"></span></p>
+    <p><strong>Reason:</strong> <span th:text="${FlagEvaluationDetails.reason}"></span></p>
+    <p><strong>Error Code:</strong> <span th:text="${FlagEvaluationDetails.errorCode}"></span></p>
+    <p><strong>Error Message:</strong> <span th:text="${FlagEvaluationDetails.errorMessage}"></span></p>
+    <p><strong>Metadata:</strong> <span th:text="${FlagEvaluationDetails.flagMetadata}"></span></p>
+</div>
 
-<a href="/page/before-hook-email-crypto">Back</a>
+
+<a href="/page/before-hook-email-crypto">Back Again</a>
 
 </body>
 </html>

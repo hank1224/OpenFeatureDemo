@@ -40,7 +40,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.11.1'
 
     // Feature flags
-    implementation 'dev.openfeature:sdk:1.8.0'
+    implementation 'dev.openfeature:sdk:1.9.0'
     implementation 'com.flagsmith:flagsmith-java-client:7.2.0'
     implementation 'dev.openfeature.contrib.providers:flagsmith:0.0.8'
     implementation 'co.featbit:featbit-openfeature-provider-java-server:1.0.0'

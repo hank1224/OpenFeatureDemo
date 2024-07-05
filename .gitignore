@@ -96,15 +96,15 @@ jspm_packages/
 ### Yarn 2.0
 # Using Zero-Installs(https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored)
 # https://github.com/fengzilong/pso/issues/28
-.yarn/*
-!.yarn/cache
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+src/main/js/.yarn/*
+!src/main/js/.yarn/cache
+!src/main/js/.yarn/patches
+!src/main/js/.yarn/plugins
+!src/main/js/.yarn/releases
+!src/main/js/.yarn/sdks
+!src/main/js/.yarn/versions
 
 # next.js build output
 .next
 
-
+/logs/

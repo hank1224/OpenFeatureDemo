@@ -32,18 +32,18 @@
 <body>
 <h1>Before Hook 用於加密敏感 EvalContent</h1>
 <p>假設必須在 Server-side 做機敏資料(Email)的Flag評估（違反安全最佳實踐，但假設業務上必須）</p>
-<p>在 Before Hook 中對用戶的電子郵件進行加密，然後記錄這個加密後的電子郵件與功能使用情況</p>
-<p>Hook 使用過程：</p>
+<p>需求：用戶(唯一Email)使用新功能，需要儲存 log，但不能洩漏且log不包含個資。</p>
+<p>解法：在 Before Hook 中對 Email 進行 Hash，再進行 Flag Eval。</p>
+<p>Hook 過程：</p>
 <ul>
-    <li>用戶(唯一Email)使用新功能，需要儲存 log，但不能洩漏且log不包含個資。</li>
-    <li>Before Hook 評估前觸發，對 Email 進行 Hash，然後記錄這個 Hash 值，保證同一人值相同。</li>
-    <li>After Hook 成功時觸發，驗證成功的 Flag Value。</li>
-    <li>Error Hook 失敗時觸發，假設該 Flag 不存在情況，發送儲存錯誤log</li>
-    <li>Finally Hook 一定觸發，傳送儲存所有log。</li>
+    <li>Before Hook 評估前觸發，對 Email 進行 Hash，然後替換 EvalCtx(EvaluationContext)。</li>
+    <li>After Hook 成功時觸發，驗證 Hash 長度是否合法，在此失敗也是觸發 Error Hook。</li>
+    <li>Error Hook 失敗時觸發，發送錯誤 log。</li>
+    <li>Finally Hook 一定觸發，發送所有 log。</li>
 </ul>
-
+<p>實作 Server 和 Client 兩端的 Hook</p>
 <ul>
-    <li>Server-Side: 用API打回去讓伺服器處理全程，因為這包@openfeature/web-sdk僅支援Client-side</li>
+    <li>Server-Side: 用 form 提交後端觸發，因為這包@openfeature/web-sdk僅支援Client-side</li>
     <li>Client-Side: 直接用js的Client-side實做</li>
 </ul>
 
@@ -69,14 +69,14 @@
     <form action="/page/before-hook-email-crypto/server-eval" method="post" id="evalOptionForm">
         <input type="hidden" id="userEmailSubmit" name="userEmailSubmit" value="">
         <fieldset>
-            <legend>評估過程是否出錯並觸發 Error Hook？（FlagKey不存在，表達Flag系統本身出錯）</legend>
+            <legend>評估過程是否出錯並使用default值？（FlagKey不存在，表達Flag系統本身出錯）</legend>
             <div>
                 <input type="radio" id="evalSuccess" name="shouldFlagEvalFailed" value="false" checked>
                 <label for="evalSuccess">將成功評估</label>
             </div>
             <div>
                 <input type="radio" id="evalError" name="shouldFlagEvalFailed" value="true">
-                <label for="evalError">錯誤：FlagKey不存在</label>
+                <label for="evalError">將使用Default值：FlagKey不存在</label>
             </div>
         </fieldset>
         <fieldset>

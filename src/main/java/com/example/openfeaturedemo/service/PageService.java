@@ -1,6 +1,9 @@
 package com.example.openfeaturedemo.service;
 
-import com.example.openfeaturedemo.dto.*;
+import com.example.openfeaturedemo.dto.FeatbitClientConfDTO;
+import com.example.openfeaturedemo.dto.MultiButtonDTO;
+import com.example.openfeaturedemo.dto.SecretButtonDTO;
+import com.example.openfeaturedemo.dto.ServerEvalRequestDTO;
 import com.example.openfeaturedemo.hooks.BeforeHookEmailCryptoHook;
 import dev.openfeature.sdk.*;
 import org.springframework.stereotype.Service;
@@ -45,7 +48,7 @@ public class PageService {
         /* FeatBit */
         Client featbitClient = OpenFeatureAPI.getInstance().getClient("featbit");
         // The OpenFeature specification allows for an optional targeting key, but FeatBit requires a key for evaluation.
-        EvaluationContext evalCtx = new ImmutableContext("user-key", new HashMap<String, Value>() {{
+        EvaluationContext evalCtx = new ImmutableContext("user-key", new HashMap<>() {{
             put("name", new Value("OpenFeatureDemo"));
         }});
         boolean featbitButtonIsEnable = featbitClient.getBooleanValue("featbit-button", false, evalCtx);
@@ -74,11 +77,14 @@ public class PageService {
 
         // shouldFlagEvalFailed: 將產生flagKey不存在錯誤
         if (serverEvalRequest.isShouldFlagEvalFailed()) {
-            flagKey += "-failed";
+            flagKey += "-not-exist";
         }
 
         Client featbitClient = OpenFeatureAPI.getInstance().getClient("featbit");
-        EvaluationContext evalCtx = new MutableContext(new HashMap<String, Value>() {{
+
+        EvaluationContext evalCtx = new MutableContext(new HashMap<>() {{
+            //在此不加入 TargetingKey，在 Before Hook 中會加入。
+            put("name", new Value("OpenFeatureDemoServer: Case5"));
             put("userEmailSubmit", new Value(serverEvalRequest.getUserEmailSubmit()));
             put("shouldBeforeHookFailed", new Value(serverEvalRequest.isShouldBeforeHookFailed()));
             put("shouldAfterHookFailed", new Value(serverEvalRequest.isShouldAfterHookFailed()));
