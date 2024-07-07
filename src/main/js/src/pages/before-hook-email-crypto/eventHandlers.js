@@ -45,4 +45,17 @@ export function setupEventHandlers() {
         document.getElementById('userEmailSubmit').value = document.getElementById('userEmailInput').value;
     });
 
+    //本地Client-side評估：監聽 clientSideEvalBtn 的點擊事件
+    document.getElementById('clientSideEvalBtn').addEventListener('click', function() {
+        const userEmailInputValue = userEmailInput.value;
+        const evalOption = document.getElementById('evalOption');
+        const evalResult = document.getElementById('evalResult');
+        if (userEmailInputValue.trim() !== '') {
+            evalResult.style.display = 'block';
+        } else {
+            console.log('clientSideEvalBtn Listener: userEmailInput is empty.');
+            evalOption.style.display = 'none';
+            evalResult.style.display = 'none';
+        }
+    });
 }

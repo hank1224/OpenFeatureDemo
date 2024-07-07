@@ -79,10 +79,10 @@ public class BeforeHookEmailCryptoHook implements Hook<Boolean> {
     @Override
     public void after(HookContext<Boolean> ctx, FlagEvaluationDetails<Boolean> details, Map<String, Object> hints) {
         String sha256hex = ctx.getCtx().getValue("userEmailSubmit").asString();
-        logger.info("[After Hook] Got Hash from beforeHookEditContext: " + sha256hex);
+        logger.info("[After Hook] Got Hash from beforeHookEditContext: {}", sha256hex);
 
         if (sha256hex.length() != 64) {
-            logger.error("[After Hook] After Hook Failed, Invalid hash length: " + sha256hex.length());
+            logger.error("[After Hook] After Hook Failed, Invalid hash length: {}", sha256hex.length());
             throw new RuntimeException("[After Hook] Invalid hash value: " + sha256hex);
         }
         logger.info("[After Hook] Hash valid checked, this is a valid hash.");

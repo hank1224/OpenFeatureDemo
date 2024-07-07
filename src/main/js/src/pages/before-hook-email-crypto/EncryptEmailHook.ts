@@ -1,8 +1,10 @@
-import {EvaluationDetails, FlagValue, Hook, HookContext} from "@openfeature/web-sdk";
+import type { Hook, HookContext, EvaluationDetails, FlagValue } from "@openfeature/web-sdk";
+import EmailHasher from "./EmailHasher";
 
-export class EncryptEmailHook implements Hook {
+export class MyHook implements Hook {
     before(hookContext: HookContext) {
         // code to run before flag evaluation
+
     }
 
     after(hookContext: HookContext, evaluationDetails: EvaluationDetails<FlagValue>) {

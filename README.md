@@ -10,7 +10,7 @@ OpenFeature 是一個開源的 Feature Flag 平台，旨在為開發者提供一
 
 寫很久看一下啦拜託，幫你快速上手。
 
-https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pvs=4
+https://hank20011224.notion.site/OpenFeature-30c10c41092d42d0b0125acbdcf1c69d?pvs=73
 
 ## Demo示例
 
@@ -61,7 +61,7 @@ https://hank20011224.notion.site/OpenFeature-2295e8c5e77e4b31b27f721b309b59a7?pv
   - 官方有給[預設帳號密碼](https://github.com/featbit/featbit?tab=readme-ov-file#1-start-featbit)
   - Mac 會遇到 port 被佔用問題：[見此解決](https://blog.csdn.net/zhang35/article/details/123895204)
 
-### npm install 建立js檔案
+### 使用 Yarn2 安裝 JS 套件
 
 WIP...
 
@@ -96,13 +96,13 @@ WIP...
       - 設定新功能與舊功能字串即可
   
   - **Case5 Flag**
-  - KeyID: `before-hook-email-crypto`
-  - Type: Boolean
+    - KeyID: `before-hook-email-crypto`
+    - Type: Boolean
 
 ### 建立 application.properties
 創建`application.properties`，可以參考`sample-application.properties`
 
-記得把 Flagsmith 和 FeatBit 的 API Key 填入
+把 Flagsmith 和 FeatBit 的 API Key 填入
 
 **Redis Port 設定為 6380**，因為 6379 是 FeatBit 的 Redis。
 

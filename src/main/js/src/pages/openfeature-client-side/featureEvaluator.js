@@ -1,13 +1,12 @@
 // featureEvaluator.js
 import {OpenFeature, ProviderEvents} from '@openfeature/web-sdk';
-import {evalContent } from "./getEvalContent";
 
 export async function evaluateFeature() {
     try {
         document.getElementById('result').innerText = '';
         document.getElementById('errorLog').innerText = '';
 
-        // handler 處理 Flag 變更事件，收到 Flag 變更事件後由這裡接手。
+        // handler 處理 Flag 變更事件，收到 Flag 變更事件後這裡會更新值並應用。
         OpenFeature.addHandler(ProviderEvents.ConfigurationChanged, (eventDetails) => {
             const client = OpenFeature.getClient();
             try {
@@ -22,7 +21,7 @@ export async function evaluateFeature() {
             }
         });
 
-        // 網頁第一次載入直接跟 server 取值寫入 Cache
+        // 初次載入取值，從本地 Cache
         const client = OpenFeature.getClient();
         const flagValue = client.getStringValue('openfeature-client-side', 'Failed, showing defaultValue.');
         console.log({flagValue});
