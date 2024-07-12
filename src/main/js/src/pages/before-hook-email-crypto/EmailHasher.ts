@@ -1,6 +1,6 @@
-// EmailHasher.js
+// EmailHasher.ts
 class EmailHasher {
-    static async hashEmail(email) {
+    static async hashEmail(email:string) {
         const encoder = new TextEncoder();
         const data = encoder.encode(email);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);

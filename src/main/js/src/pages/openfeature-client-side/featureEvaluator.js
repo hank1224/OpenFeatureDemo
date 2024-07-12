@@ -10,7 +10,7 @@ export async function evaluateFeature() {
         OpenFeature.addHandler(ProviderEvents.ConfigurationChanged, (eventDetails) => {
             const client = OpenFeature.getClient();
             try {
-                // client在前端取得時並不需要 await, 因為在設置Provider時已經載入了整個快取，僅有Provider的初始化需要 await
+                // client 在前端取得時並不需要 await, 因為在設置Provider時已經載入了整個快取，僅有Provider的初始化需要 await
                 // 見：https://openfeature.dev/blog/catering-to-the-client-side/#client-side-evaluation-tomorrow
                 const flagValue = client.getStringValue('openfeature-client-side', 'Failed, showing defaultValue.');
                 console.log({...eventDetails, flagValue});

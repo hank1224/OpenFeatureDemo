@@ -1,4 +1,4 @@
-// index.js
+// index.ts
 import { OpenFeature, ProviderEvents } from '@openfeature/web-sdk';
 import { setupEventHandlers } from "./eventHandlers";
 import { staticFbProvider } from "./staticFbProvider";

@@ -58,7 +58,7 @@
     <label for="userEmailHashPreview">SHA-256 Hash:</label>
     <input type="text" id="userEmailHashPreview" name="userEmailHashPreview" placeholder="SHA-256 Preview" value="" disabled>
 
-    <button type="button" class="active" id="userEmailInputBtn">下一步</button>
+    <button type="button" class="active" id="userEmailInputBtn">更新userEmail</button>
 </div>
 
 
@@ -116,10 +116,12 @@
 <!-- 步驟三 -->
 <div id="evalResult" style="display: none;">
     <h2>步驟三：檢視 Eval 結果</h2>
-    <h3>Before-Hook Hash</h3>
-    <h3>After Hook Log</h3>
-    <h3>Error-Hook Log</h3>
-    <h3>Finally-Hook Log</h3>
+    <p id="flagKey">Flag Key: </p>
+    <p id="value">Value: </p>
+    <p id="reason">Reason: </p>
+    <p id="variant">Variant: </p>
+    <p id="errorCode">Error Code: </p>
+    <p id="errorMessage">Error Message: </p>
 </div>
 
 <div id="result"></div>

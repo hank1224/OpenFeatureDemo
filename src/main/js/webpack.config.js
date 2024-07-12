@@ -4,7 +4,7 @@ module.exports = {
     mode: 'development',
     entry: {
         'openfeature-client-side': './src/pages/openfeature-client-side/index.js',
-        'before-hook-email-crypto': './src/pages/before-hook-email-crypto/index.js',
+        'before-hook-email-crypto': './src/pages/before-hook-email-crypto/index.ts',
     },
     output: {
         path: path.resolve(__dirname, '../resources/dist/js'),

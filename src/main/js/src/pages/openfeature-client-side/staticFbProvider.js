@@ -1,4 +1,4 @@
-// staticFbProvider.js
+// staticFbProvider.ts
 import {FbProvider} from '@featbit/openfeature-provider-js-client';
 import {OpenFeature} from '@openfeature/web-sdk';
 import {clientKey, featbitEventUrl, featbitStreamingUrl} from "../../services/FbClientConfig";

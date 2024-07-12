@@ -1,4 +1,4 @@
-// eventHandlers.js
+// eventHandlers.ts
 import { evaluateFeature } from './featureEvaluator';
 
 export function setupEventHandlers() {
