@@ -40,13 +40,7 @@ export class EncryptEmailHook implements Hook {
                 hashedEmail
             );
         }).catch(err => {
-            logger.error(
-                `[Before Hook] Logging System error: ` + err.message,
-                hookContext.flagKey,
-                null,
-                hookContext,
-                null
-            );
+            console.log('BeforeHook Error: ' + err.message);
         });
     }
 
@@ -65,7 +59,7 @@ export class EncryptEmailHook implements Hook {
 
             if (hookContext.context['shouldAfterHookFailed'] as boolean) {
                 // Evaluation 已成功，但是 After Hook 的自定義後處理(檢查Hash值是否合法)失敗。
-                const errorMessage = `[After Hook] Hash Check Failed for flag ${hookContext.flagKey}`;
+                const errorMessage = `[After Hook] Hash Valid Check Failed.`;
                 logger.error(
                     errorMessage,
                     hookContext.flagKey,
@@ -82,13 +76,7 @@ export class EncryptEmailHook implements Hook {
                 hashedEmail
             );
         }).catch(err => {
-            logger.error(
-                `[After Hook] Logging System error: ` + err.message,
-                hookContext.flagKey,
-                null,
-                hookContext,
-                evaluationDetails
-            );
+            console.log('AfterHook Error: ' + err.message);
         });
     }
 
@@ -104,31 +92,22 @@ export class EncryptEmailHook implements Hook {
                 null
             );
         }).catch(hashError => {
-            logger.error(
-                `[Error Hook] Logging System error: ` + hashError.message,
-                hookContext.flagKey,
-                null,
-                hookContext,
-                null
-            );
+            console.log('ErrorHook Error: ' + hashError.message);
+
         });
     }
 
-    finally(hookContext: HookContext) {
-        logger.flushLog().then(async () => {
-            logger.info(
-                `[Finally Hook] Log flushed for flag ${hookContext.flagKey}`,
-                hookContext.flagKey,
-                await EmailHasher.hashEmail(hookContext.context['userEmailInput'] as string)
-            );
-        }).catch(async err => {
-            logger.error(
-                `[Finally Hook] Error flushing log: ` + err.message,
-                hookContext.flagKey,
-                await EmailHasher.hashEmail(hookContext.context['userEmailInput'] as string),
-                hookContext,
-                null
-            );
+    async finally(hookContext: HookContext) {
+        const userEmailHashed = await EmailHasher.hashEmail(hookContext.context['userEmailInput'] as string);
+
+        logger.info(
+            `[Finally Hook] Preparing to flush log.`,
+            hookContext.flagKey,
+            userEmailHashed
+        );
+
+        await logger.flushLog().catch(err => {
+            console.log('FinallyHook Error: ' + err.message);
         });
     }
 }

@@ -25,9 +25,6 @@ export async function staticFbProvider() {
     // add a hook globally, to run on all evaluations
     OpenFeature.addHooks(new EncryptEmailHook());
 
-    // add a log globally
-    // OpenFeature.setLogger(RedisLogger);
-
     // await OpenFeature.setContext(evalContent); // 此 Demo 不在此設置
     // Client-side 的 Evaluation Context 在 Provider 初始化時被設置，後續的 Client instance 會使用這個，也可再覆蓋。
     // Server-side 的 Evaluation Context 在 建立 Client instance 時被設置。

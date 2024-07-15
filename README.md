@@ -98,6 +98,7 @@ WIP...
   - **Case5 Flag**
     - KeyID: `before-hook-email-crypto`
     - Type: Boolean
+      - 設定為true
 
 ### 建立 application.properties
 創建`application.properties`，可以參考`sample-application.properties`
