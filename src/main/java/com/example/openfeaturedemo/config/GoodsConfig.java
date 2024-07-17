@@ -39,6 +39,18 @@ public class GoodsConfig {
             goods2.setIsOnSale(true);
             goods2.setCreateTime(OffsetDateTime.now());
 
+            Goods goods3 = new Goods();
+            goods2.setProductCode("ipad2025");
+            goods2.setGoodsName("iPad 2025");
+            goods2.setGoodsIntro("有成功取得");
+            goods2.setGoodsCategoryId("ipad");
+            goods2.setGoodsCoverImg("https://www.example.com/ipad2025.jpg");
+            goods2.setCostPrice(34900);
+            goods2.setSellingPrice(38000);
+            goods2.setStockNum(20);
+            goods2.setIsOnSale(true);
+            goods2.setCreateTime(OffsetDateTime.now());
+
             // 保存到数据库
             goodsRepository.save(goods1);
             goodsRepository.save(goods2);
